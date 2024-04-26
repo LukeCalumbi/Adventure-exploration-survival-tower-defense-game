@@ -6,39 +6,90 @@ using UnityEngine;
 
 public class FollowPlayer : MonoBehaviour
 {   
-    [SerializeField] private Transform playerPosition;
-    [SerializeField] private float speed = 2, minDistance = 0.5f, distance;
+    [SerializeField] private Transform target;
+    [SerializeField] private float speed = 2, minDistance = 0.5f,radius = 5, distance;
     [SerializeField] private Rigidbody2D rigidBody;
     [SerializeField] private SpriteRenderer sprite;
-    private Vector2 targetPosition, currentPosition, direction;
 
-    private void FixedUpdate()
+    public void FixedUpdate()
     {   
-        targetPosition = this.playerPosition.position;
-        currentPosition = this.transform.position;
-        distance = Vector2.Distance(targetPosition,currentPosition);
+        SearchPlayer();
 
-        if(distance < this.minDistance) 
+        if(this.target == null)
         {
-            this.rigidBody.velocity = Vector2.zero;
+            StopMovement();
             return;
         }
 
-        if(Math.Abs(targetPosition.x - currentPosition.x) >= Math.Abs(targetPosition.y - currentPosition.y))
-        {
-            this.transform.position += Vector3.right * (targetPosition.x - currentPosition.x)/(targetPosition.x - currentPosition.x);
-        }
-        else
-        {
-            this.transform.position += Vector3.up * Time.fixedDeltaTime * (targetPosition.y - currentPosition.y)/(targetPosition.y - currentPosition.y);
-        }
-
-
-        // direction = targetPosition - currentPosition;
-        // direction = direction.normalized;
-        // rigidBody.MovePosition(rigidBody.position+direction*speed * Time.fixedDeltaTime);
-        
-        if(this.rigidBody.velocity.x > 0) this.sprite.flipX = false;
-        else this.sprite.flipX = true;
+        Move();
     }
+
+    void StopMovement(){
+        rigidBody.velocity = Vector2.zero;
+    }
+
+    void Move()
+    {   
+        float distAtX, distAtY, directionX,directionY;
+        distAtX = this.transform.position.x - target.position.x;
+        distAtY = this.transform.position.y - target.position.y;
+        distance = (float) Math.Sqrt(distAtX*distAtX + distAtY*distAtY);
+
+        if(distance < minDistance) 
+        {
+            StopMovement();
+            return;
+        }
+
+        directionX = -distAtX/Math.Abs(distAtX);
+        directionY = -distAtY/Math.Abs(distAtY);
+
+        if(Math.Abs(distAtX) >= Math.Abs(distAtY)) 
+            this.transform.position += Vector3.right * speed * directionX * Time.fixedDeltaTime; 
+        else
+            this.transform.position += Vector3.up * speed * directionY * Time.fixedDeltaTime;
+
+        InvertSpriteInX();
+    }
+
+    private void SearchPlayer()
+    {
+        Collider2D collider = Physics2D.OverlapCircle(this.transform.position,this.radius);
+
+        if(collider == null) {
+            this.target = null;
+            return;
+        }
+
+        Vector2 currentPosition = this.transform.position;
+        Vector2 targetPosition = collider.transform.position;
+        Vector2 direction = (targetPosition - currentPosition).normalized;
+
+        RaycastHit2D hit = Physics2D.Raycast(currentPosition,direction);
+            
+        if(hit.transform == null){
+            this.target = null;
+            return;
+        }
+
+        if(!hit.transform.CompareTag("Friendly")){
+            this.target = null;
+            return;
+        }
+
+        this.target = hit.transform;
+    }
+
+    void InvertSpriteInX()
+    {
+        if(rigidBody.velocity.x > 0) sprite.flipX = false;
+        else sprite.flipX = true;
+    }
+
+    private void OnDrawGizmos() // desenha circulo de visao
+    {
+        Gizmos.DrawWireSphere(this.transform.position,radius);    
+        if(this.target != null) Gizmos.DrawLine(this.transform.position,target.transform.position);
+    }
+
 }
