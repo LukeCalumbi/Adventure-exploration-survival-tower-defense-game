@@ -6,17 +6,19 @@ using UnityEngine;
 
 public class FollowPlayer : MonoBehaviour
 {   
-    [SerializeField] private Transform target;
+    [SerializeField] private Transform target, lastTargetPosition;
     [SerializeField] private float speed = 2, minDistance = 0.5f,radius = 5, distance;
     [SerializeField] private Rigidbody2D rigidBody;
     [SerializeField] private SpriteRenderer sprite;
+    Vector2 currentPosition, targetPosition, direction;
+    float distAtX, distAtY, directionX,directionY;
+    RaycastHit2D rayInfoX, rayInfoY;
 
     public void FixedUpdate()
     {   
         SearchPlayer();
-
-        if(this.target == null)
-        {
+        
+        if(this.target == null){
             StopMovement();
             return;
         }
@@ -30,54 +32,63 @@ public class FollowPlayer : MonoBehaviour
 
     void Move()
     {   
-        float distAtX, distAtY, directionX,directionY;
-        distAtX = this.transform.position.x - target.position.x;
-        distAtY = this.transform.position.y - target.position.y;
-        distance = (float) Math.Sqrt(distAtX*distAtX + distAtY*distAtY);
+        this.distAtX = this.transform.position.x - target.position.x;
+        this.distAtY = this.transform.position.y - target.position.y;
+        this.distance = (float) Math.Sqrt(distAtX*distAtX + distAtY*distAtY);
 
-        if(distance < minDistance) 
-        {
+        if(distance < minDistance) {
             StopMovement();
             return;
         }
-
-        directionX = -distAtX/Math.Abs(distAtX);
-        directionY = -distAtY/Math.Abs(distAtY);
-
-        if(Math.Abs(distAtX) >= Math.Abs(distAtY)) 
-            this.transform.position += Vector3.right * speed * directionX * Time.fixedDeltaTime; 
-        else
-            this.transform.position += Vector3.up * speed * directionY * Time.fixedDeltaTime;
+        
+        this.rayInfoX = Physics2D.Raycast(Vector2.right * currentPosition.x, Vector2.right * direction.x);
+        this.rayInfoY = Physics2D.Raycast(Vector2.up * currentPosition.y, Vector2.up * direction.y);
+        
+        this.directionX = -distAtX/Math.Abs(distAtX);
+        this.directionY = -distAtY/Math.Abs(distAtY);
+        
+        if(rayInfoX.collider != null && rayInfoX.transform.CompareTag("Friendly")) MoveinAxisX();
+        else if(rayInfoY.collider != null && rayInfoY.transform.CompareTag("Friendly")) MoveinAxisY();
+        else if(Math.Abs(distAtX) >= Math.Abs(distAtY)) MoveinAxisX();    
+        else MoveinAxisY();
 
         InvertSpriteInX();
     }
+    void MoveinAxisX(){
+        this.transform.position += directionX * speed * Time.fixedDeltaTime * Vector3.right;
+    }
+    void MoveinAxisY(){
+        this.transform.position += directionY * speed * Time.fixedDeltaTime * Vector3.up;
+    }
 
     private void SearchPlayer()
-    {
+    {   
         Collider2D collider = Physics2D.OverlapCircle(this.transform.position,this.radius);
 
-        if(collider == null) {
+        if(collider == null || collider == this.gameObject) {
             this.target = null;
+            Debug.Log("Executando2");
             return;
         }
 
-        Vector2 currentPosition = this.transform.position;
-        Vector2 targetPosition = collider.transform.position;
-        Vector2 direction = (targetPosition - currentPosition).normalized;
+        this.currentPosition = this.transform.position;
+        this.targetPosition = collider.transform.position;
+        this.direction = (targetPosition - currentPosition).normalized;
 
-        RaycastHit2D hit = Physics2D.Raycast(currentPosition,direction);
-            
-        if(hit.transform == null){
-            this.target = null;
+        RaycastHit2D hit = Physics2D.Raycast(this.currentPosition,this.direction);
+        
+        if(hit.collider == null) {
+            Debug.Log("è mano");
             return;
         }
-
-        if(!hit.transform.CompareTag("Friendly")){
+        if(!hit.collider.CompareTag("Friendly")){
             this.target = null;
+            Debug.Log("Executando1");
             return;
         }
 
         this.target = hit.transform;
+        Debug.Log("Executando");
     }
 
     void InvertSpriteInX()
