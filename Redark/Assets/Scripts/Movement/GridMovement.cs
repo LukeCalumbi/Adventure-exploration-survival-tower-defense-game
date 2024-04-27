@@ -1,120 +1,154 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.Collections;
 using UnityEngine;
-
-public enum MovementDirection {
-    Up,
-    Down,
-    Left,
-    Right,
-    Zero
-}
 
 [RequireComponent(typeof(GridSnapping))]
 public class GridMovement : MonoBehaviour
 {
     public float moveSpeed = 5f;
+    public int stepCount = 1;
     public bool checkCollision = true;
-    public List<String> ignoreCollisionsWithTags;
+    public List<string> ignoreCollisionsWithTags;
 
     GridSnapping snapComponent;
-    MovementDirection requestedDirection = MovementDirection.Zero;
-    MovementDirection movementDirection = MovementDirection.Zero;
+    Vector3 requestedDirection = Vector3.zero;
     Vector3 targetSnapPoint = Vector3.zero;
+    bool moving = false;
 
     void Start()
     {
         snapComponent = GetComponent<GridSnapping>();
-        movementDirection = MovementDirection.Zero;
-        requestedDirection = MovementDirection.Zero;
         targetSnapPoint = GridSnapping.closestSnapPointOf(transform.position);
-    }
-
-    void Update()
-    {
-        Vector3 direction = Vector3.zero;
-        direction.x = Convert.ToInt32(Input.GetKey(KeyCode.D)) - Convert.ToInt32(Input.GetKey(KeyCode.A));
-        direction.y = Convert.ToInt32(Input.GetKey(KeyCode.W)) - Convert.ToInt32(Input.GetKey(KeyCode.S));
-        MoveTowardsDirection(direction);
+        StopMoving();
     }
 
     void FixedUpdate()
     {
-        if (movementDirection == MovementDirection.Zero && requestedDirection != MovementDirection.Zero && IsTileInDirectionEmpty(requestedDirection))
+        if (!moving && requestedDirection != Vector3.zero)
         {
-            movementDirection = requestedDirection;
-            targetSnapPoint = GetNextSnapPointInDirection(movementDirection);
-            snapComponent.DisableSnapping();
+            StartMoving(requestedDirection);
             return;
         }
 
-        if (movementDirection != MovementDirection.Zero && IsPositionCloseToSnapPosition())
+        if (moving && WillOvershootCurrentTile() && !IsNeighbourTileEmpty(GetMovementDirection()))
         {
-            if (requestedDirection == MovementDirection.Zero || !IsTileInDirectionEmpty(requestedDirection)) 
-            {  
-                movementDirection = MovementDirection.Zero;
-                targetSnapPoint = GridSnapping.closestSnapPointOf(transform.position);
-                snapComponent.EnableSnapping();
+            StopMoving();
+            return;
+        }
+
+        if (moving && WillOvershootTarget())
+        {
+            if (requestedDirection == Vector3.zero || !IsNeighbourTileEmpty(requestedDirection))
+            {
+                StopMoving();
                 return;
             }
 
-            movementDirection = requestedDirection;
-            targetSnapPoint = GetNextSnapPointInDirection(movementDirection);
-            MoveAndTurn(requestedDirection);
+            MoveAndUpdateDirection(requestedDirection);
             return;
         }
 
-        Move();
+        if (moving) 
+            MoveAndKeepDirection();
+
+        requestedDirection = Vector3.zero;
     }
 
-    private bool IsPositionCloseToSnapPosition()
+    public void MoveTowardsDirection(Vector3 direction)
     {
-        Vector3 differenceBefore = targetSnapPoint - transform.position;
-        Vector3 differenceAfter = targetSnapPoint - GetNextPosition();
-
-        Func<float, int> sign = x => (x > 0) ? 1 : (x < 0) ? -1 : 0;
-        return sign(differenceBefore.x) != sign(differenceAfter.x) || sign(differenceBefore.y) != sign(differenceAfter.y);
+        direction = ClosestDirectionVector(direction);
+        requestedDirection = direction;
     }
 
-    private void MoveAndTurn(MovementDirection newDirection)
+    private void StartMoving(Vector3 direction)
+    {
+        if (direction == Vector3.zero || !IsNeighbourTileEmpty(direction))
+            return;
+
+        targetSnapPoint = GetNextStepSnapPoint(direction);
+        snapComponent.DisableSnapping();
+        moving = true;
+    }
+
+    private void MoveAndUpdateDirection(Vector3 direction)
     {
         float totalMovement = moveSpeed * Time.fixedDeltaTime;
-        float distanceWalkedBeforeTurn = (targetSnapPoint - transform.position).magnitude;
-        float remainingMovement = totalMovement - distanceWalkedBeforeTurn;
+        float distanceToTarget = (targetSnapPoint - transform.position).magnitude;
+        float remainingMovement = totalMovement - distanceToTarget;
 
-        transform.position = targetSnapPoint + DirectionToVector(newDirection) * remainingMovement;
+        transform.position = targetSnapPoint + direction * remainingMovement;
+        targetSnapPoint = GetNextStepSnapPoint(direction);
     }
 
-    private void Move()
+    private void MoveAndKeepDirection()
     {
         transform.position = GetNextPosition();
     }
 
-    private Vector3 GetNextPosition()
+    private void StopMoving()
     {
-        Vector3 direction = GetMovementVector();
+        transform.position = targetSnapPoint;
+        snapComponent.EnableSnapping();
+        moving = false;
+    }
+
+    bool WillOvershootTarget()
+    {
+        return WillOvershootPoint(targetSnapPoint);
+    }
+
+    bool WillOvershootCurrentTile()
+    {
+        Vector3 tilePosition = GridSnapping.closestSnapPointOf(transform.position);
+        return WillOvershootPoint(tilePosition);
+    }
+
+    bool WillOvershootPoint(Vector3 point)
+    {
+        Vector3 distanceNow = point - transform.position;
+        Vector3 distanceNext = point - GetNextPosition();
+
+        return Vector3.Dot(distanceNow, distanceNext) <= 0.01f;
+    }
+
+    Vector3 GetNeighbourSnapPoint(Vector3 direction)
+    {
+        return GetSnapPointAt(direction, 1);
+    }
+
+    Vector3 GetNextStepSnapPoint(Vector3 direction)
+    {
+        return GetSnapPointAt(direction, stepCount);
+    }
+
+    Vector3 GetSnapPointAt(Vector3 direction, int distance)
+    {
+        Vector3 thisTilePosition = GridSnapping.closestSnapPointOf(transform.position);
+        return GridSnapping.closestSnapPointOf(thisTilePosition + direction * GridSnapping.TILE_SIZE * distance);
+    }
+
+    public Vector3 GetMovementDirection()
+    {
+        if (!moving)
+            return Vector3.zero;
+
+        return (targetSnapPoint - transform.position).normalized;
+    }
+
+    public Vector3 GetNextPosition()
+    {
+        Vector3 direction = GetMovementDirection();
         return transform.position + direction * moveSpeed * Time.fixedDeltaTime;
     }
 
-    private Vector3 GetNextSnapPointInDirection(MovementDirection direction)
-    {
-        Vector3 directionVector = DirectionToVector(direction);
-        Vector3 currentSnapPoint = GridSnapping.closestSnapPointOf(transform.position);
-        return GridSnapping.closestSnapPointOf(currentSnapPoint + directionVector * GridSnapping.TILE_SIZE);
-    }
-
-    private bool IsTileInDirectionEmpty(MovementDirection direction)
+    bool IsNeighbourTileEmpty(Vector3 direction)
     {
         if (!checkCollision)
             return true;
 
-        Vector2 boxExtents = (GridSnapping.TILE_SIZE - 0.1f) * Vector2.one;
-        Vector2 directionVector = DirectionToVector(direction);
-        Vector2 snapPoint = GridSnapping.closestSnapPointOf(transform.position);
-        RaycastHit2D hit = Physics2D.BoxCast(snapPoint + directionVector * GridSnapping.TILE_SIZE, boxExtents, 0f, directionVector, 0.1f);
+        Vector2 boxEntents = (GridSnapping.TILE_SIZE - 0.1f) * Vector2.one;
+
+        RaycastHit2D hit = Physics2D.BoxCast(GetNeighbourSnapPoint(direction), boxEntents, 0f, direction, 0.05f);
 
         if (hit.collider == null || hit.collider == this.gameObject || ignoreCollisionsWithTags.Contains(hit.collider.tag))
             return true;
@@ -122,59 +156,18 @@ public class GridMovement : MonoBehaviour
         return false;
     }
 
-    public Vector3 GetMovementVector()
-    {
-        return DirectionToVector(movementDirection);
-    }
-
-    public Vector2 GetMovementVector2D()
-    {
-        Vector3 direction3d = GetMovementVector();
-        return new Vector2(direction3d.x, direction3d.y);
-    }
-
-    public void MoveTowardsDirection(MovementDirection direction)
-    {
-        requestedDirection = direction;
-    }
-
-    public void MoveTowardsDirection(Vector3 direction)
-    {
-        MoveTowardsDirection(VectorToDirection(direction));
-    }
-
-    public static Vector3 DirectionToVector(MovementDirection direction)
-    {
-        switch (direction)
-        {
-            case MovementDirection.Up: return Vector3.up;
-            case MovementDirection.Down: return Vector3.down;
-            case MovementDirection.Left: return Vector3.left;
-            case MovementDirection.Right: return Vector3.right;
-            default: return Vector3.zero;
-        }
-    }
-
-    public static MovementDirection VectorToDirection(Vector3 vector)
-    {
-        if (vector.x == 0f && vector.y == 0f)
-            return MovementDirection.Zero;
-
-        List<MovementDirection> directions = new List<MovementDirection> { MovementDirection.Up, MovementDirection.Down, MovementDirection.Left, MovementDirection.Right };
-        directions.Sort(delegate(MovementDirection a, MovementDirection b) { 
-            return (int)(Vector3.Dot(DirectionToVector(a), vector) - Vector3.Dot(DirectionToVector(b), vector));
-        });
-
-        return directions[3];
-    }
-
     public static Vector3 ClosestDirectionVector(Vector3 vector)
     {
-        List<Vector3> directions = new List<Vector3> { Vector3.up, Vector3.down, Vector3.left, Vector3.right };
-        directions.Sort(delegate(Vector3 a, Vector3 b) { 
-            return (int)(Vector3.Dot(a, vector) - Vector3.Dot(b, vector));
-        });
+        if (vector == Vector3.zero)
+            return Vector3.zero;
 
-        return directions[3];
+        float dotUp = Vector3.Dot(Vector3.up, vector);
+        float dotRight = Vector3.Dot(Vector3.right, vector);
+
+        if (Mathf.Abs(dotUp) > Mathf.Abs(dotRight))
+            return dotUp > 0f ? Vector3.up : Vector3.down;
+
+        else
+            return dotRight > 0f ? Vector3.right : Vector3.left;
     }
 }

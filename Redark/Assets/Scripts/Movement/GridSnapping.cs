@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GridSnapping : MonoBehaviour
 {
-
     public const float TILE_SIZE = 1f;
     public bool keepSnapping = true;
 
