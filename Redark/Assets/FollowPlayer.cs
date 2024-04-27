@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -62,8 +63,21 @@ public class FollowPlayer : MonoBehaviour
     }
 
     private void SearchPlayer()
-    {   
-        Collider2D collider = Physics2D.OverlapCircle(this.transform.position,this.radius);
+    {  
+        List<Collider2D> colliders = new List<Collider2D>(Physics2D.OverlapCircleAll(this.transform.position, this.radius));
+
+        if(colliders.Count == 0){
+            this.target = null;
+            return;
+        }
+        
+        colliders.Sort(delegate (Collider2D A,Collider2D B) {
+            float distA = (this.transform.position - A.transform.position).sqrMagnitude;
+            float distB = (this.transform.position - B.transform.position).sqrMagnitude; 
+            return distA < distB ? -1 : distA > distB ? 1 : 0; 
+        });
+
+        Collider2D collider = colliders[0];
 
         if(collider == null || collider == this.gameObject) {
             this.target = null;
