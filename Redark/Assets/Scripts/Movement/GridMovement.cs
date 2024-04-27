@@ -118,7 +118,7 @@ public class GridMovement : MonoBehaviour
         Vector2 directionVector = DirectionToVector(direction);
         RaycastHit2D hit = Physics2D.BoxCast(GridSnapping.closestSnapPointOf(transform.position), boxExtents, 0f, directionVector, GridSnapping.TILE_SIZE * 1f);
 
-        if (hit.collider == null || hit.collider == this || ignoreCollisionsWithTags.Contains(hit.collider.tag))
+        if (hit.collider == null || hit.collider == this.gameObject || ignoreCollisionsWithTags.Contains(hit.collider.tag))
             return true;
 
         return false;
