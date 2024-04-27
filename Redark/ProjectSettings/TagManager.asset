@@ -4,7 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
+<<<<<<< HEAD
   - Intangible
+=======
+  - Friendly
+  - Agressive
+>>>>>>> 4c9de23 (update)
   layers:
   - Default
   - TransparentFX
