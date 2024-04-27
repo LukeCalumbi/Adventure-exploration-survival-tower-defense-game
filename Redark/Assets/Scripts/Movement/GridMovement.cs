@@ -33,8 +33,6 @@ public class GridMovement : MonoBehaviour
         targetSnapPoint = GridSnapping.closestSnapPointOf(transform.position);
     }
 
-    /*
-    Enable This is you want to test movement very quick
     void Update()
     {
         Vector3 direction = Vector3.zero;
@@ -42,7 +40,6 @@ public class GridMovement : MonoBehaviour
         direction.y = Convert.ToInt32(Input.GetKey(KeyCode.W)) - Convert.ToInt32(Input.GetKey(KeyCode.S));
         MoveTowardsDirection(direction);
     }
-    */
 
     void FixedUpdate()
     {
@@ -114,9 +111,10 @@ public class GridMovement : MonoBehaviour
         if (!checkCollision)
             return true;
 
-        Vector2 boxExtents = GridSnapping.TILE_SIZE * Vector2.one;
+        Vector2 boxExtents = (GridSnapping.TILE_SIZE - 0.1f) * Vector2.one;
         Vector2 directionVector = DirectionToVector(direction);
-        RaycastHit2D hit = Physics2D.BoxCast(GridSnapping.closestSnapPointOf(transform.position), boxExtents, 0f, directionVector, GridSnapping.TILE_SIZE * 1f);
+        Vector2 snapPoint = GridSnapping.closestSnapPointOf(transform.position);
+        RaycastHit2D hit = Physics2D.BoxCast(snapPoint + directionVector * GridSnapping.TILE_SIZE, boxExtents, 0f, directionVector, 0.1f);
 
         if (hit.collider == null || hit.collider == this.gameObject || ignoreCollisionsWithTags.Contains(hit.collider.tag))
             return true;
