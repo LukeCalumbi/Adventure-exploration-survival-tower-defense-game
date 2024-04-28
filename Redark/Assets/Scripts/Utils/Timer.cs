@@ -2,17 +2,18 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+// All time related variables are in Seconds
 public class Timer 
 {
     private float waitTime = 1f;
-    private float time = 0f;
+    private float timeElapsed = 0f;
     private bool isPaused = true;
     private bool neverRan = true;
 
     public Timer(float waitTime)
     {
         this.waitTime = waitTime;
-        time = 0f;
+        timeElapsed = 0f;
         isPaused = true;
         neverRan = true;
     }
@@ -22,13 +23,13 @@ public class Timer
         if (isPaused)
             return;
 
-        time = Mathf.Min(time + deltaTime, waitTime);
+        timeElapsed = Mathf.Min(timeElapsed + deltaTime, waitTime);
         isPaused = isPaused || Finished();
     }
 
     public void Start()
     {
-        time = 0f;
+        timeElapsed = 0f;
         isPaused = false;
         neverRan = false;
     }
@@ -53,7 +54,7 @@ public class Timer
 
     public void ForceEnd()
     {
-        time = waitTime;
+        timeElapsed = waitTime;
         isPaused = true;
     }
 
@@ -70,17 +71,17 @@ public class Timer
 
     public void ExtendTime(float extraTime)
     {
-        time -= extraTime;
+        timeElapsed -= extraTime;
     }
 
     public bool Finished()
     {
-        return time == waitTime;
+        return timeElapsed == waitTime;
     }
 
     public bool IsRunning()
     {
-        return !isPaused && time < waitTime;
+        return !isPaused && timeElapsed < waitTime;
     }
 
     public bool IsPaused()
@@ -91,5 +92,25 @@ public class Timer
     public bool NeverRan()
     {
         return neverRan;
+    }
+
+    public float GetTimeElapsed()
+    {
+        return timeElapsed;
+    }
+
+    public float GetCompletionPercentage()
+    {
+        return Mathf.Max(GetTimeElapsed() / waitTime, 0f);
+    }
+
+    public float GetTimeRemaining()
+    {
+        return waitTime - timeElapsed;
+    }
+
+    public float GetRemainingTimePercentage()
+    {
+        return Mathf.Min(GetTimeRemaining() / waitTime, 1f);
     }
 }
