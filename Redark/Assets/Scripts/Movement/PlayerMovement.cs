@@ -55,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
         direction.x = GetAxis(KeyCode.A, KeyCode.D);
         direction.y = GetAxis(KeyCode.S, KeyCode.W);
 
-        return direction;
+        return GridMovement.ClosestDirectionVector(direction);
     }
 
     public Vector3 GetFacingDirection()
@@ -65,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
 
     public Vector3 GetSnapPointInFrontOfPlayer()
     {
-        if (movement.IsMoving())
+        if (movement.TilesUntilTarget() > 0.5f)
             return movement.GetSnapPointAt(facingDirection, 2);
 
         return movement.GetNeighbourSnapPoint(facingDirection);

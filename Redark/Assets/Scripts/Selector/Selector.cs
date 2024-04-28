@@ -10,6 +10,7 @@ public class Selector : MonoBehaviour
     GridSnapping snap;
     void Start()
     {
+        snap = GetComponent<GridSnapping>();
         snap.EnableSnapping();
     }
 

@@ -92,23 +92,33 @@ public class GridMovement : MonoBehaviour
         moving = false;
     }
 
-    bool WillOvershootTarget()
+    public float TilesUntilTarget()
+    {
+        return (targetSnapPoint - transform.position).magnitude / GridSnapping.TILE_SIZE;
+    }
+
+    public bool WillOvershootTarget()
     {
         return WillOvershootPoint(targetSnapPoint);
     }
 
-    bool WillOvershootCurrentTile()
+    public bool WillOvershootCurrentTile()
     {
-        Vector3 tilePosition = GridSnapping.ClosestSnapPointOf(transform.position);
+        Vector3 tilePosition = GetCurrentSnapPoint();
         return WillOvershootPoint(tilePosition);
     }
 
-    bool WillOvershootPoint(Vector3 point)
+    public bool WillOvershootPoint(Vector3 point)
     {
         Vector3 distanceNow = point - transform.position;
         Vector3 distanceNext = point - GetNextPosition();
 
         return Vector3.Dot(distanceNow, distanceNext) <= 0.01f;
+    }
+
+    public Vector3 GetCurrentSnapPoint()
+    {
+        return GridSnapping.ClosestSnapPointOf(transform.position);
     }
 
     public Vector3 GetNeighbourSnapPoint(Vector3 direction)
@@ -123,7 +133,7 @@ public class GridMovement : MonoBehaviour
 
     public Vector3 GetSnapPointAt(Vector3 direction, int distance)
     {
-        Vector3 thisTilePosition = GridSnapping.ClosestSnapPointOf(transform.position);
+        Vector3 thisTilePosition = GetCurrentSnapPoint();
         return GridSnapping.ClosestSnapPointOf(thisTilePosition + direction * GridSnapping.TILE_SIZE * distance);
     }
 
