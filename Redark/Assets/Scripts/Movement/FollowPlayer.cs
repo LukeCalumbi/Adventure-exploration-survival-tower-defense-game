@@ -5,30 +5,33 @@ using Unity.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[RequireComponent(typeof(GridMovement))]
 public class FollowPlayer : MonoBehaviour
 {   
+    [SerializeField] private GridMovement movement;
     [SerializeField] private Transform target, lastTargetPosition;
-    [SerializeField] private float speed = 2, minDistance = 0.5f,radius = 5, distance;
+    [SerializeField] private float minDistance = 0.5f,radius = 5, distance;
     [SerializeField] private Rigidbody2D rigidBody;
     [SerializeField] private SpriteRenderer sprite;
     Vector2 currentPosition, targetPosition, direction;
     float distAtX, distAtY, directionX,directionY;
     RaycastHit2D rayInfoX, rayInfoY;
+    
+    void Start()
+    {
+        movement = GetComponent<GridMovement>();
+    }
 
     public void FixedUpdate()
     {   
         SearchPlayer();
         
         if(this.target == null){
-            StopMovement();
+            //StopMovement();
             return;
         }
 
-        Move();
-    }
-
-    void StopMovement(){
-        rigidBody.velocity = Vector2.zero;
+        Move2();
     }
 
     void Move()
@@ -38,10 +41,10 @@ public class FollowPlayer : MonoBehaviour
         this.distance = (float) Math.Sqrt(distAtX*distAtX + distAtY*distAtY);
 
         if(distance < minDistance) {
-            StopMovement();
+            //StopMovement();
             return;
         }
-        
+
         this.rayInfoX = Physics2D.Raycast(Vector2.right * currentPosition.x, Vector2.right * direction.x);
         this.rayInfoY = Physics2D.Raycast(Vector2.up * currentPosition.y, Vector2.up * direction.y);
         
@@ -53,21 +56,27 @@ public class FollowPlayer : MonoBehaviour
         else if(Math.Abs(distAtX) >= Math.Abs(distAtY)) MoveinAxisX();    
         else MoveinAxisY();
 
-        InvertSpriteInX();
+        InvertSprite();
+    }
+
+    void Move2()
+    {
+        movement.MoveTowardsDirection(target.position - this.transform.position);
     }
     void MoveinAxisX(){
-        this.transform.position += directionX * speed * Time.fixedDeltaTime * Vector3.right;
+        movement.MoveTowardsDirection(directionX * Vector3.right);
     }
     void MoveinAxisY(){
-        this.transform.position += directionY * speed * Time.fixedDeltaTime * Vector3.up;
+        movement.MoveTowardsDirection(directionY * Vector3.up);
     }
 
     private void SearchPlayer()
     {  
         List<Collider2D> colliders = new List<Collider2D>(Physics2D.OverlapCircleAll(this.transform.position, this.radius));
 
-        if(colliders.Count == 0){
+        if(colliders.Count < 2){
             this.target = null;
+            //Debug.Log("colliders.Count < 2");
             return;
         }
         
@@ -77,38 +86,24 @@ public class FollowPlayer : MonoBehaviour
             return distA < distB ? -1 : distA > distB ? 1 : 0; 
         });
 
-        Collider2D collider = colliders[0];
+        Collider2D collider = colliders[1];
 
-        if(collider == null || collider == this.gameObject) {
+        if(!collider.CompareTag("Friendly")) {
             this.target = null;
-            Debug.Log("Executando2");
+            //Debug.Log("!collider.CompareTag Friendly");
             return;
         }
 
-        this.currentPosition = this.transform.position;
-        this.targetPosition = collider.transform.position;
-        this.direction = (targetPosition - currentPosition).normalized;
-
-        RaycastHit2D hit = Physics2D.Raycast(this.currentPosition,this.direction);
-        
-        if(hit.collider == null) {
-            Debug.Log("è mano");
-            return;
-        }
-        if(!hit.collider.CompareTag("Friendly")){
-            this.target = null;
-            Debug.Log("Executando1");
-            return;
-        }
-
-        this.target = hit.transform;
-        Debug.Log("Executando");
+        this.target = collider.transform;
+        //Debug.Log("Só maravilha irmao");
     }
 
-    void InvertSpriteInX()
-    {
-        if(rigidBody.velocity.x > 0) sprite.flipX = false;
-        else sprite.flipX = true;
+    void InvertSprite()
+    {   
+        if(movement.IsIdle()) return;
+
+        sprite.flipX = movement.GetMovementDirection().x < 0;
+        sprite.flipY = movement.GetMovementDirection().y < 0;
     }
 
     private void OnDrawGizmos() // desenha circulo de visao

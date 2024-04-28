@@ -167,7 +167,7 @@ public class GridMovement : MonoBehaviour
         if (!checkCollision)
             return true;
 
-        Vector2 boxEntents = (GridSnapping.TILE_SIZE - 0.1f) * Vector2.one;
+        Vector2 boxEntents = (GridSnapping.TILE_SIZE - 0.2f) * Vector2.one;
 
         RaycastHit2D hit = Physics2D.BoxCast(GetNeighbourSnapPoint(direction), boxEntents, 0f, direction, 0.05f);
 
