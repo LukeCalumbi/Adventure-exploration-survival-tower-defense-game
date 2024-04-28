@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(GridSnapping))]
 public class GridMovement : MonoBehaviour
 {
-    public float moveSpeed = 5f;
+    public float moveSpeed = 5f,tolerance = float.Epsilon;
     public int stepCount = 1;
     public bool checkCollision = true;
     public List<string> ignoreCollisionsWithTags;
@@ -170,7 +170,7 @@ public class GridMovement : MonoBehaviour
         if (!checkCollision)
             return true;
 
-        Vector2 boxEntents = (GridSnapping.TILE_SIZE - float.Epsilon) * Vector2.one;
+        Vector2 boxEntents = (GridSnapping.TILE_SIZE - tolerance) * Vector2.one;
 
         List<Collider2D> colliders = new List<Collider2D>(Physics2D.OverlapBoxAll(GetNeighbourSnapPoint(direction), boxEntents, 0f));
         List<Collider2D> collidersFiltered = new List<Collider2D>(
