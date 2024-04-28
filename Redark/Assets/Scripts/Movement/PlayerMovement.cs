@@ -4,17 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(GridMovement))]
+[RequireComponent(typeof(FacingDirection))]
 public class PlayerMovement : MonoBehaviour
 {
     public float timeToWalkInDifferentDirection = 0.1f;
 
     GridMovement movement;
-    Vector3 facingDirection = Vector3.right;
+    FacingDirection facingDirection;
     Timer walkInDifferentDirectionTimer;
 
     void Start()
     {
         movement = GetComponent<GridMovement>();
+        facingDirection = GetComponent<FacingDirection>();
         walkInDifferentDirectionTimer = new Timer(timeToWalkInDifferentDirection);
     }
 
@@ -28,16 +30,18 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        if (direction != facingDirection && movement.IsIdle()){
+        if (!facingDirection.IsSame(direction) && movement.IsIdle()){
             walkInDifferentDirectionTimer.Start();
-            facingDirection = direction;
+            facingDirection.Set(direction);
             return;
         }
 
-        facingDirection = direction;
+        facingDirection.Set(direction);
 
-        if (walkInDifferentDirectionTimer.Finished() || walkInDifferentDirectionTimer.NeverRan())
+        if (walkInDifferentDirectionTimer.Finished() || walkInDifferentDirectionTimer.NeverRan()) 
+        {
             movement.MoveTowardsDirection(direction);
+        }
     }
 
     void FixedUpdate()
@@ -56,24 +60,5 @@ public class PlayerMovement : MonoBehaviour
         direction.y = GetAxis(KeyCode.S, KeyCode.W);
 
         return GridMovement.ClosestDirectionVector(direction);
-    }
-
-    public Vector3 GetFacingDirection()
-    {
-        return facingDirection;
-    }
-
-    public Vector3 GetSnapPointInFrontOfPlayer()
-    {
-        if (movement.TilesUntilTarget() > 0.5f)
-            return movement.GetSnapPointAt(facingDirection, 2);
-
-        return movement.GetNeighbourSnapPoint(facingDirection);
-    }
-
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position, facingDirection * GridSnapping.TILE_SIZE * 2);
     }
 }

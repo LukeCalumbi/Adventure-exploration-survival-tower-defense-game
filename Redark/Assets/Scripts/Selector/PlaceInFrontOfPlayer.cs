@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(GridSnapping))]
 public class PlaceInFrontOfPlayer : MonoBehaviour
 {
-    [SerializeField] public PlayerMovement player;
+    [SerializeField] public FacingDirection facingDirection;
 
     GridSnapping snap;
 
@@ -14,12 +14,12 @@ public class PlaceInFrontOfPlayer : MonoBehaviour
         snap = GetComponent<GridSnapping>();
         snap.EnableSnapping();
 
-        if (player == null)
-            Debug.LogError("No Player Especified for PlaceInFrontOfPlayer");
+        if (facingDirection == null)
+            Debug.LogError("No FacingDirection Especified for PlaceInFrontOfPlayer");
     }
 
     void Update()
     {
-        transform.position = player.GetSnapPointInFrontOfPlayer();
+        transform.position = facingDirection.FacingSnapPoint();
     }
 }

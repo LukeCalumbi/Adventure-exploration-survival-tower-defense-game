@@ -90,6 +90,7 @@ public class GridMovement : MonoBehaviour
         transform.position = targetSnapPoint;
         snapComponent.EnableSnapping();
         moving = false;
+        requestedDirection = Vector3.zero;
     }
 
     public float TilesUntilTarget()

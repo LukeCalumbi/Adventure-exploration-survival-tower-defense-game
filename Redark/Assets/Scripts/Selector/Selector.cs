@@ -14,9 +14,9 @@ public class Selector : MonoBehaviour
         snap.EnableSnapping();
     }
 
-    public UnityEngine.Object GetSelectedObject()
+    public GameObject GetSelectedObject()
     {
-        List<Collider2D> colliders = new List<Collider2D>(Physics2D.OverlapBoxAll(transform.position, Vector2.one * GridSnapping.TILE_SIZE, 0f));
+        List<Collider2D> colliders = new List<Collider2D>(Physics2D.OverlapBoxAll(transform.position, Vector2.one * (GridSnapping.TILE_SIZE - 0.1f), 0f));
         
         if (colliders.Count == 0)
             return null;
@@ -28,11 +28,11 @@ public class Selector : MonoBehaviour
         };
 
         colliders.Sort((Collider2D a, Collider2D b) => sortFunction(a, b));
-        return colliders[0];
+        return colliders[0].gameObject;
     }
 
     public bool IsSelectingSomething()
     {
-        return Physics2D.OverlapBox(transform.position, Vector2.one * GridSnapping.TILE_SIZE, 0f) != null;
+        return Physics2D.OverlapBox(transform.position, Vector2.one * (GridSnapping.TILE_SIZE - 0.1f), 0f) != null;
     }
 }

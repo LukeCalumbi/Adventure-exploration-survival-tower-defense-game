@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 125488831}
   - component: {fileID: 125488830}
   - component: {fileID: 125488829}
+  - component: {fileID: 125488834}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -167,7 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3afd7d47e815db76b8919337b36bbc36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1205499597}
+  facingDirection: {fileID: 1205499598}
 --- !u!114 &125488831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,11 +244,24 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &125488834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 125488828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09725da3db5a92b959d3cdd8bbd7434c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turret: {fileID: 108730053715308626, guid: 485eef0f5b34d32fe949e02f0e90fd83, type: 3}
 --- !u!1 &807389516
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,10 +364,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1205499595}
   - component: {fileID: 1205499594}
-  - component: {fileID: 1205499597}
   - component: {fileID: 1205499593}
   - component: {fileID: 1205499592}
   - component: {fileID: 1205499596}
+  - component: {fileID: 1205499598}
+  - component: {fileID: 1205499597}
   m_Layer: 0
   m_Name: Square
   m_TagString: Untagged
@@ -515,6 +530,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeToWalkInDifferentDirection: 0.2
+--- !u!114 &1205499598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1205499589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8cd727ce401d4577a665fcb1f5f44eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultFacingDirection: {x: 1, y: 0, z: 0}
 --- !u!1 &1600089131
 GameObject:
   m_ObjectHideFlags: 0
