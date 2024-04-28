@@ -183,8 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b8bd467d3a2af2d98b909e60018284d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  tolerance: 0.00001
+  moveSpeed: 1
   stepCount: 1
   checkCollision: 1
   ignoreCollisionsWithTags: []
@@ -458,8 +457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b8bd467d3a2af2d98b909e60018284d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  tolerance: 0.00001
+  moveSpeed: 1
   stepCount: 1
   checkCollision: 1
   ignoreCollisionsWithTags: []

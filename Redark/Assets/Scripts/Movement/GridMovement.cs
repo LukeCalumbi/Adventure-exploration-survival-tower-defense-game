@@ -117,7 +117,7 @@ public class GridMovement : MonoBehaviour
         Vector3 distanceNow = point - transform.position;
         Vector3 distanceNext = point - GetNextPosition();
 
-        return Vector3.Dot(distanceNow, distanceNext) <= 0.01f;
+        return Vector3.Dot(distanceNow, distanceNext) < 0f || distanceNow == Vector3.zero;
     }
 
     public Vector3 GetCurrentSnapPoint()
