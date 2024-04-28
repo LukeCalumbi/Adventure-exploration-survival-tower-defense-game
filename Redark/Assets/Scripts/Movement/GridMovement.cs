@@ -172,10 +172,14 @@ public class GridMovement : MonoBehaviour
 
         Vector2 boxEntents = (GridSnapping.TILE_SIZE - tolerance) * Vector2.one;
 
+        Vector3 neighbourTile = GetNeighbourSnapPoint(direction);
         List<Collider2D> colliders = new List<Collider2D>(Physics2D.OverlapBoxAll(GetNeighbourSnapPoint(direction), boxEntents, 0f));
         List<Collider2D> collidersFiltered = new List<Collider2D>(
             colliders.Where(
-                (Collider2D collider) => collider.gameObject != gameObject && !ignoreCollisionsWithTags.Contains(collider.gameObject.tag)
+                (Collider2D collider) => 
+                    collider.gameObject != gameObject && 
+                    !ignoreCollisionsWithTags.Contains(collider.gameObject.tag) && 
+                    (collider.transform.position - neighbourTile).sqrMagnitude < GridSnapping.TILE_SIZE * GridSnapping.TILE_SIZE
             )
         );
 
