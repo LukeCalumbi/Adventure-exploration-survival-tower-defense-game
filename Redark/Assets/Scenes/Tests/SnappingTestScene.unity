@@ -249,10 +249,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  stepCount: 3
+  stepCount: 1
   checkCollision: 1
   ignoreCollisionsWithTags: []
-  moving: 0
 --- !u!114 &1205499593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -390,6 +389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e81b3e5d507d9b64cbe31e4d0e9d92b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeToWalkInDifferentDirection: 0.2
 --- !u!1 &1600089131
 GameObject:
   m_ObjectHideFlags: 0

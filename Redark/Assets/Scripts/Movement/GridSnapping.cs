@@ -12,7 +12,7 @@ public class GridSnapping : MonoBehaviour
         if (!keepSnapping)
             return;
 
-        transform.position = closestSnapPointOf(transform.position);
+        transform.position = ClosestSnapPointOf(transform.position);
     }
 
     public void DisableSnapping()
@@ -25,7 +25,7 @@ public class GridSnapping : MonoBehaviour
         keepSnapping = true;
     }
 
-    public static Vector3 closestSnapPointOf(Vector3 position) {
+    public static Vector3 ClosestSnapPointOf(Vector3 position) {
         return new Vector3(
             Mathf.Sign(position.x) * (Mathf.Floor(Mathf.Abs(position.x)) + TILE_SIZE / 2f), 
             Mathf.Sign(position.y) * (Mathf.Floor(Mathf.Abs(position.y)) + TILE_SIZE / 2f), 

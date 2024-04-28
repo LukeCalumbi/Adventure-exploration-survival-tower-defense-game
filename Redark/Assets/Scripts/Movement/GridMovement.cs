@@ -18,7 +18,7 @@ public class GridMovement : MonoBehaviour
     void Start()
     {
         snapComponent = GetComponent<GridSnapping>();
-        targetSnapPoint = GridSnapping.closestSnapPointOf(transform.position);
+        targetSnapPoint = GridSnapping.ClosestSnapPointOf(transform.position);
         StopMoving();
     }
 
@@ -99,7 +99,7 @@ public class GridMovement : MonoBehaviour
 
     bool WillOvershootCurrentTile()
     {
-        Vector3 tilePosition = GridSnapping.closestSnapPointOf(transform.position);
+        Vector3 tilePosition = GridSnapping.ClosestSnapPointOf(transform.position);
         return WillOvershootPoint(tilePosition);
     }
 
@@ -111,20 +111,20 @@ public class GridMovement : MonoBehaviour
         return Vector3.Dot(distanceNow, distanceNext) <= 0.01f;
     }
 
-    Vector3 GetNeighbourSnapPoint(Vector3 direction)
+    public Vector3 GetNeighbourSnapPoint(Vector3 direction)
     {
         return GetSnapPointAt(direction, 1);
     }
 
-    Vector3 GetNextStepSnapPoint(Vector3 direction)
+    public Vector3 GetNextStepSnapPoint(Vector3 direction)
     {
         return GetSnapPointAt(direction, stepCount);
     }
 
-    Vector3 GetSnapPointAt(Vector3 direction, int distance)
+    public Vector3 GetSnapPointAt(Vector3 direction, int distance)
     {
-        Vector3 thisTilePosition = GridSnapping.closestSnapPointOf(transform.position);
-        return GridSnapping.closestSnapPointOf(thisTilePosition + direction * GridSnapping.TILE_SIZE * distance);
+        Vector3 thisTilePosition = GridSnapping.ClosestSnapPointOf(transform.position);
+        return GridSnapping.ClosestSnapPointOf(thisTilePosition + direction * GridSnapping.TILE_SIZE * distance);
     }
 
     public Vector3 GetMovementDirection()
@@ -139,6 +139,16 @@ public class GridMovement : MonoBehaviour
     {
         Vector3 direction = GetMovementDirection();
         return transform.position + direction * moveSpeed * Time.fixedDeltaTime;
+    }
+
+    public bool IsMoving()
+    {
+        return moving;
+    }
+
+    public bool IsIdle()
+    {
+        return !moving;
     }
 
     bool IsNeighbourTileEmpty(Vector3 direction)
