@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(GridSnapping))]
@@ -68,6 +69,8 @@ public class GridMovement : MonoBehaviour
         targetSnapPoint = GetNextStepSnapPoint(direction);
         snapComponent.DisableSnapping();
         moving = true;
+
+        MoveAndKeepDirection();
     }
 
     private void MoveAndUpdateDirection(Vector3 direction)
@@ -167,14 +170,16 @@ public class GridMovement : MonoBehaviour
         if (!checkCollision)
             return true;
 
-        Vector2 boxEntents = (GridSnapping.TILE_SIZE - 0.2f) * Vector2.one;
+        Vector2 boxEntents = (GridSnapping.TILE_SIZE - float.Epsilon) * Vector2.one;
 
-        RaycastHit2D hit = Physics2D.BoxCast(GetNeighbourSnapPoint(direction), boxEntents, 0f, direction, 0.05f);
+        List<Collider2D> colliders = new List<Collider2D>(Physics2D.OverlapBoxAll(GetNeighbourSnapPoint(direction), boxEntents, 0f));
+        List<Collider2D> collidersFiltered = new List<Collider2D>(
+            colliders.Where(
+                (Collider2D collider) => collider.gameObject != gameObject && !ignoreCollisionsWithTags.Contains(collider.gameObject.tag)
+            )
+        );
 
-        if (hit.collider == null || hit.collider == this.gameObject || ignoreCollisionsWithTags.Contains(hit.collider.tag))
-            return true;
-
-        return false;
+        return collidersFiltered.Count == 0;
     }
 
     public static Vector3 ClosestDirectionVector(Vector3 vector)
