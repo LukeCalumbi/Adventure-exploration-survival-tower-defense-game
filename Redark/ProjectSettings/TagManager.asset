@@ -8,6 +8,7 @@ TagManager:
   - Agressive
   - Artifact
   - PlayerSelector
+  - Intangible
   layers:
   - Default
   - TransparentFX
@@ -54,6 +55,9 @@ TagManager:
   - name: Character
     uniqueID: 543850081
     locked: 0
-  - name: 
+  - name: LastGround
     uniqueID: 2242837853
+    locked: 0
+  - name: New Layer 5
+    uniqueID: 2316337449
     locked: 0
