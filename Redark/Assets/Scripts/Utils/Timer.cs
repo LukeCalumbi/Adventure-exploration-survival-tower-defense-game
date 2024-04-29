@@ -94,6 +94,11 @@ public class Timer
         return neverRan;
     }
 
+    public float GetWaitTime()
+    {
+        return waitTime;
+    }
+
     public float GetTimeElapsed()
     {
         return timeElapsed;

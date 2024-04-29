@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Friendly
   - Agressive
+  - Artifact
   layers:
   - Default
   - TransparentFX

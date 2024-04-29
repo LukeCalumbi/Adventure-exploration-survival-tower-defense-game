@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(GridSnapping))]
-public class PlaceInFrontOfPlayer : MonoBehaviour
+public class PlaceInFront : MonoBehaviour
 {
     [SerializeField] public FacingDirection facingDirection;
 
@@ -15,7 +15,7 @@ public class PlaceInFrontOfPlayer : MonoBehaviour
         snap.EnableSnapping();
 
         if (facingDirection == null)
-            Debug.LogError("No FacingDirection Especified for PlaceInFrontOfPlayer");
+            Debug.LogError("No FacingDirection Especified for PlaceInFront");
     }
 
     void Update()
