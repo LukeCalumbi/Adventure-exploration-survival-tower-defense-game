@@ -10,7 +10,6 @@ public class PlayerSelector : MonoBehaviour
     const KeyCode INTERACT_KEY = KeyCode.Space;
     const KeyCode HIT_KEY = KeyCode.E;
 
-    public GameObject turret;
     Selector selector;
 
     void Start()
@@ -35,7 +34,7 @@ public class PlayerSelector : MonoBehaviour
         switch (selector.TryInteract())
         {
             case InteractError.NoObjectSelected: 
-                PlaceTurret();
+                TryPlaceSelectedItemFromInventory();
                 break;
 
             default:
@@ -45,29 +44,19 @@ public class PlayerSelector : MonoBehaviour
 
     void Hit()
     {
-        switch (selector.TryHit())
-        {
-            case InteractError.NoObjectSelected: 
-                Debug.Log("Player's hit");
-                break;
-
-            default:
-                break;
-        }
+        selector.TryHit();
     }
 
-    void PlaceTurret()
+    void TryPlaceSelectedItemFromInventory()
     {
-        Spawn(turret);
-    }
+        Item item = Inventory.GetSelectedItem();
 
-    void RemoveSelectedObject()
-    {
-        GameObject selectedObject = selector.GetSelectedObject();
-        if (selectedObject == null)
+        if (!Inventory.IsItemPlaceable(item))
             return;
 
-        Destroy(selectedObject);
+        IronManager.ConsumeIron(item.cost);
+        Spawn(item.gameObject);
+        Inventory.OnItemPlaced(item);
     }
 
     GameObject Spawn(GameObject prefab) 
