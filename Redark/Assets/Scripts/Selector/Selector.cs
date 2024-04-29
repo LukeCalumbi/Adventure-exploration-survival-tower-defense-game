@@ -3,6 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
+
+public enum InteractError
+{
+    NoError,
+    NoInteractComponent,
+    NoObjectSelected
+}
 
 [RequireComponent(typeof(GridSnapping))]
 public class Selector : MonoBehaviour
@@ -12,6 +20,36 @@ public class Selector : MonoBehaviour
     {
         snap = GetComponent<GridSnapping>();
         snap.EnableSnapping();
+    }
+
+    public InteractError TryInteract()
+    {
+        GameObject gameObject = GetSelectedObject();
+
+        if (gameObject == null)
+            return InteractError.NoObjectSelected;
+        
+        Interactable interactable = gameObject.GetComponent<Interactable>();
+        if (interactable == null)
+            return InteractError.NoInteractComponent;
+
+        interactable.Interact(this);
+        return InteractError.NoError;
+    }
+
+    public InteractError TryHit()
+    {
+        GameObject gameObject = GetSelectedObject();
+
+        if (gameObject == null)
+            return InteractError.NoObjectSelected;
+        
+        Interactable interactable = gameObject.GetComponent<Interactable>();
+        if (interactable == null)
+            return InteractError.NoInteractComponent;
+
+        interactable.Hit(this);
+        return InteractError.NoError;
     }
 
     public GameObject GetSelectedObject()

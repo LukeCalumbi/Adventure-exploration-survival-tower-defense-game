@@ -1,10 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 [RequireComponent(typeof(Selector))]
 public class PlayerSelector : MonoBehaviour
 {
+    const KeyCode INTERACT_KEY = KeyCode.Space;
+    const KeyCode HIT_KEY = KeyCode.E;
+
     public GameObject turret;
     Selector selector;
 
@@ -15,14 +20,40 @@ public class PlayerSelector : MonoBehaviour
 
     void Update()
     {
-        if (!Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(INTERACT_KEY))
+        {
+            Interact();
             return;
+        }
 
-        if (selector.IsSelectingSomething())
-            RemoveSelectedObject();
+        if (Input.GetKeyDown(HIT_KEY))
+            Hit();
+    }
 
-        else
-            PlaceTurret();
+    void Interact()
+    {
+        switch (selector.TryInteract())
+        {
+            case InteractError.NoObjectSelected: 
+                PlaceTurret();
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    void Hit()
+    {
+        switch (selector.TryHit())
+        {
+            case InteractError.NoObjectSelected: 
+                Debug.Log("Player's hit");
+                break;
+
+            default:
+                break;
+        }
     }
 
     void PlaceTurret()

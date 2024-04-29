@@ -8,8 +8,6 @@ public class ZombieSelector : MonoBehaviour
 {
     public float timeToAct = 1f;
 
-    public int damage = 1;
-
     Selector selector;
     Timer actionTimer;
     void Start()
@@ -30,17 +28,7 @@ public class ZombieSelector : MonoBehaviour
 
     void Act()
     {
-        GameObject selectedObject = selector.GetSelectedObject();
-
-        if (selectedObject == null)
-            return;
-
-        Health health = selectedObject.GetComponent<Health>();
-
-        if (health == null)
-            return;
-
-        health.DoDamage(damage);
+        selector.TryHit();
     }
 
     void FixedUpdate()
