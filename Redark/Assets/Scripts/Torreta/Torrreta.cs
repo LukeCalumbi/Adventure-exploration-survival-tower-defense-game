@@ -30,7 +30,7 @@ public class Torreta : MonoBehaviour
             //angle = Mathf.Atan2(posZombie.y, posZombie.x) * Mathf.Rad2Deg;
             //transform.rotation = Quaternion.Euler(0, 0, angle);
 
-            if (( Mathf.RoundToInt(bulletCountdown)>=1) && ZombieOnArea){
+            if ((Mathf.RoundToInt(bulletCountdown)>=1) && ZombieOnArea){
             Shoot();
             bulletCountdown = 0;
             }

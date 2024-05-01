@@ -93,7 +93,6 @@ public class GridMovement : MonoBehaviour
         transform.position = targetSnapPoint;
         snapComponent.EnableSnapping();
         moving = false;
-        requestedDirection = Vector3.zero;
     }
 
     public float TilesUntilTarget()
@@ -170,25 +169,10 @@ public class GridMovement : MonoBehaviour
         if (!checkCollision)
             return true;
 
-<<<<<<< HEAD
-        Vector2 boxEntents = (GridSnapping.TILE_SIZE - 0.1f) * Vector2.one;
-
-        Vector3 neighbourTile = GetNeighbourSnapPoint(direction);
-        List<Collider2D> colliders = new List<Collider2D>(Physics2D.OverlapBoxAll(GetNeighbourSnapPoint(direction), boxEntents, 0f));
-        List<Collider2D> collidersFiltered = new List<Collider2D>(
-            colliders.Where(
-                (Collider2D collider) => 
-                    collider.gameObject != gameObject && 
-                    !ignoreCollisionsWithTags.Contains(collider.gameObject.tag) 
-                    // && (collider.transform.position - neighbourTile).sqrMagnitude < GridSnapping.TILE_SIZE * GridSnapping.TILE_SIZE
-            )
-        );
-=======
         Vector2 boxEntents = 0.95f * GridSnapping.TILE_SIZE * Vector2.one;
 
         Vector3 position = GetCurrentSnapPoint() + 0.5f * GridSnapping.TILE_SIZE * direction;
         Vector3 neighbourPosition = GetNeighbourSnapPoint(direction);
->>>>>>> 8d1ea75 (Adapted GridMovement to correctly detect collisions with tilemaps and)
 
         foreach (RaycastHit2D hit in Physics2D.CircleCastAll(position, GridSnapping.TILE_SIZE, direction, 1.5f * GridSnapping.TILE_SIZE))
         {
@@ -198,7 +182,7 @@ public class GridMovement : MonoBehaviour
             GridMovement movement = hit.collider.gameObject.GetComponent<GridMovement>();
             if (movement == null) 
             {
-                if (Vector2.Distance(hit.point, neighbourPosition) < 0.4f * GridSnapping.TILE_SIZE)
+                if (hit.collider.ClosestPoint(neighbourPosition) == (Vector2)neighbourPosition)
                     return false;
                 
                 continue;

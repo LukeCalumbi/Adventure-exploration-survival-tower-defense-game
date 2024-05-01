@@ -12,16 +12,8 @@ public enum InteractError
     NoObjectSelected
 }
 
-[RequireComponent(typeof(GridSnapping))]
 public class Selector : MonoBehaviour
 {
-    GridSnapping snap;
-    void Start()
-    {
-        snap = GetComponent<GridSnapping>();
-        snap.EnableSnapping();
-    }
-
     public InteractError TryInteract()
     {
         GameObject gameObject = GetSelectedObject();
