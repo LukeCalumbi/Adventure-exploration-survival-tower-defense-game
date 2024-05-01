@@ -170,6 +170,7 @@ public class GridMovement : MonoBehaviour
         if (!checkCollision)
             return true;
 
+<<<<<<< HEAD
         Vector2 boxEntents = (GridSnapping.TILE_SIZE - 0.1f) * Vector2.one;
 
         Vector3 neighbourTile = GetNeighbourSnapPoint(direction);
@@ -182,8 +183,35 @@ public class GridMovement : MonoBehaviour
                     // && (collider.transform.position - neighbourTile).sqrMagnitude < GridSnapping.TILE_SIZE * GridSnapping.TILE_SIZE
             )
         );
+=======
+        Vector2 boxEntents = 0.95f * GridSnapping.TILE_SIZE * Vector2.one;
 
-        return collidersFiltered.Count == 0;
+        Vector3 position = GetCurrentSnapPoint() + 0.5f * GridSnapping.TILE_SIZE * direction;
+        Vector3 neighbourPosition = GetNeighbourSnapPoint(direction);
+>>>>>>> 8d1ea75 (Adapted GridMovement to correctly detect collisions with tilemaps and)
+
+        foreach (RaycastHit2D hit in Physics2D.CircleCastAll(position, GridSnapping.TILE_SIZE, direction, 1.5f * GridSnapping.TILE_SIZE))
+        {
+            if (hit.collider.gameObject == this.gameObject || ignoreCollisionsWithTags.Contains(hit.collider.tag))
+                continue;
+
+            GridMovement movement = hit.collider.gameObject.GetComponent<GridMovement>();
+            if (movement == null) 
+            {
+                if (Vector2.Distance(hit.point, neighbourPosition) < 0.4f * GridSnapping.TILE_SIZE)
+                    return false;
+                
+                continue;
+            }
+
+            if (movement.GetCurrentSnapPoint() == neighbourPosition)
+                return false;
+
+            if (movement.GetNeighbourSnapPoint(movement.GetMovementDirection()) == neighbourPosition)
+                return false;
+        }
+
+        return true;
     }
 
     public static Vector3 ClosestDirectionVector(Vector3 vector)

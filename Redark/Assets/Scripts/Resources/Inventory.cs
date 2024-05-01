@@ -49,7 +49,7 @@ public class Inventory : MonoBehaviour
         itemInfo[item] = new ItemWorldInfo();
     }
 
-    public bool IsSelectedItemPlaceable()
+    public static bool IsSelectedItemPlaceable()
     {
         return IsItemPlaceable(GetSelectedItem());
     }
@@ -66,7 +66,6 @@ public class Inventory : MonoBehaviour
             return false;
 
         ItemWorldInfo info = itemInfo[item];
-        Debug.Log(info.amountPlaced);
         return IronManager.HasAtLeast(item.cost) && !(item.isUnique && info.amountPlaced != 0);
     }
 

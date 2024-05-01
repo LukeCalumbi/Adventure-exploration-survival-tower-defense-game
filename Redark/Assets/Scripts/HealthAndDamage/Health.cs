@@ -37,4 +37,14 @@ public class Health : MonoBehaviour
     {
         return health.IsZero();
     }
+
+    public int GetHealth()
+    {
+        return health.GetCurrentCount();
+    }
+
+    public float GetHealthPercentage()
+    {
+        return health.GetCompletionPercentage();
+    }
 }

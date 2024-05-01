@@ -6,6 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(Health))]
 public class ArtifactInteracable : MonoBehaviour
 {
+    public List<string> authorizedTags = new List<string>();
+    public int defaultDamage = 1;
     Interactable interactable;
     Health health;
 
@@ -19,10 +21,10 @@ public class ArtifactInteracable : MonoBehaviour
 
     void TakeDamage(Selector selector)
     {
-        Damage damage = selector.gameObject.GetComponent<Damage>();
-        if (damage == null)
+        if (!authorizedTags.Contains(selector.gameObject.tag))
             return;
 
-        health.DoDamage(damage.GetDamage());
+        Damage damage = selector.gameObject.GetComponent<Damage>();
+        health.DoDamage(damage != null ? damage.GetDamage() : defaultDamage);
     }
 }

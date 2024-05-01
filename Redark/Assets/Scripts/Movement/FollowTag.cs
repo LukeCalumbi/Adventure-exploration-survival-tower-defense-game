@@ -9,7 +9,7 @@ using UnityEngine;
 [RequireComponent(typeof(FollowTarget))]
 public class FollowTag : MonoBehaviour
 {   
-    public string targetTag = "Friendly";
+    public List<string> targetTags;
     public float radius = 5;
     public float minDistance = 0.5f;
     FollowTarget follow;
@@ -30,7 +30,7 @@ public class FollowTag : MonoBehaviour
 
         colliders = new List<Collider2D>(colliders.Where((Collider2D collider) =>
             collider.gameObject != this.gameObject && 
-            collider.CompareTag(targetTag) &&
+            targetTags.Contains(collider.tag) &&
             (collider.transform.position - this.transform.position).sqrMagnitude >= Mathf.Pow(minDistance, 2)
         ));
 
