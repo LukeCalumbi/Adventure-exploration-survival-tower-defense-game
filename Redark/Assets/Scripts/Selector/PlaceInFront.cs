@@ -20,6 +20,7 @@ public class PlaceInFront : MonoBehaviour
 
     void Update()
     {
-        transform.position = facingDirection.FacingSnapPoint();
+        if (facingDirection != null)
+            transform.position = facingDirection.FacingSnapPoint();
     }
 }

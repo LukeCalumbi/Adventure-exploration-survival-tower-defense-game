@@ -19,6 +19,12 @@ public class ZombieSelector : MonoBehaviour
 
     void Update()
     {
+        if (selector == null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
         if (actionTimer.Finished())
         {
             Act();

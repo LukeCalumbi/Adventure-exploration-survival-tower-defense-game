@@ -10,6 +10,8 @@ public class PlayerSelector : MonoBehaviour
     const KeyCode INTERACT_KEY = KeyCode.Space;
     const KeyCode HIT_KEY = KeyCode.E;
 
+    public FacingDirection facingDirection;
+
     Selector selector;
 
     void Start()
@@ -19,6 +21,12 @@ public class PlayerSelector : MonoBehaviour
 
     void Update()
     {
+        if (selector == null)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
         if (Input.GetKeyDown(INTERACT_KEY))
         {
             Interact();
@@ -63,6 +71,11 @@ public class PlayerSelector : MonoBehaviour
     {
         GameObject spawnedObject = Instantiate(prefab);
         spawnedObject.transform.position = selector.transform.position;
+
+        FacingDirection direction = spawnedObject.GetComponent<FacingDirection>();
+        if (direction != null)
+            direction.Set(facingDirection.Get());
+
         return spawnedObject;
     }
 }

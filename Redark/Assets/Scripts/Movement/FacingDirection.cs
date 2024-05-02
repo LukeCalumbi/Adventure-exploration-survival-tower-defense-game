@@ -4,13 +4,7 @@ using UnityEngine;
 
 public class FacingDirection : MonoBehaviour
 {
-    public Vector3 defaultFacingDirection = Vector3.right;
     Vector3 facingDirection = Vector3.right;
-
-    void Start()
-    {
-        Set(defaultFacingDirection);
-    }
 
     public void Set(Vector3 direction)
     {
