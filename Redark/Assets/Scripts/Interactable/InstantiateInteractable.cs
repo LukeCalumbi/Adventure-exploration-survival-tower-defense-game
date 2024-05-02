@@ -3,21 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Interactable))]
-public class InstantiateInteractable : MonoBehaviour
+public class InstantiateInteractable : InteractableFunction
 {
-    public List<string> authorizedTags;
     public GameObject prefab;
-    Interactable interactable;
 
-    void Start()
+    public override void Action(Selector selector)
     {
-        interactable = GetComponent<Interactable>();
-        interactable.AddOnInteractCallback(Instantiate);
-    }
-
-    void Instantiate(Selector selector)
-    {
-        if (authorizedTags.Contains(selector.gameObject.tag))
-            Instantiate(prefab);
+        Instantiate(prefab);
     }
 }

@@ -14,6 +14,8 @@ public enum InteractError
 
 public class Selector : MonoBehaviour
 {
+    public List<string> authorizedTags = new List<string>();
+    public float detectionTiles = 1.0f;
     public InteractError TryInteract()
     {
         GameObject gameObject = GetSelectedObject();
@@ -46,7 +48,9 @@ public class Selector : MonoBehaviour
 
     public GameObject GetSelectedObject()
     {
-        List<Collider2D> colliders = new List<Collider2D>(Physics2D.OverlapBoxAll(transform.position, Vector2.one * (GridSnapping.TILE_SIZE - 0.1f), 0f));
+        List<Collider2D> colliders = new List<Collider2D>(Physics2D.OverlapBoxAll(transform.position, Vector2.one * (detectionTiles * GridSnapping.TILE_SIZE - 0.1f), 0f).Where(
+            (Collider2D collider) => authorizedTags.Contains(collider.gameObject.tag)
+        ));
         
         if (colliders.Count == 0)
             return null;
@@ -63,6 +67,6 @@ public class Selector : MonoBehaviour
 
     public bool IsSelectingSomething()
     {
-        return Physics2D.OverlapBox(transform.position, Vector2.one * (GridSnapping.TILE_SIZE - 0.1f), 0f) != null;
+        return Physics2D.OverlapBox(transform.position, Vector2.one * (detectionTiles * GridSnapping.TILE_SIZE - 0.1f), 0f) != null;
     }
 }

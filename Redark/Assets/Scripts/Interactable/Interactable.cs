@@ -6,26 +6,34 @@ using UnityEngine.Events;
 
 public class Interactable : MonoBehaviour
 {
-    [SerializeField] public UnityEvent<Selector> onInteract;
-    [SerializeField] public UnityEvent<Selector> onHit;
+    [SerializeField] public Dictionary<string, UnityEvent<Selector>> onInteract = new Dictionary<string, UnityEvent<Selector>>();
+    [SerializeField] public Dictionary<string, UnityEvent<Selector>> onHit = new Dictionary<string, UnityEvent<Selector>>();
 
     public void Interact(Selector selector)
     {
-        onInteract.Invoke(selector);
+        if (onInteract.ContainsKey(selector.gameObject.tag))
+            onInteract[selector.gameObject.tag].Invoke(selector);
     }
 
     public void Hit(Selector selector)
     {
-        onHit.Invoke(selector);
+        if (onHit.ContainsKey(selector.gameObject.tag))
+            onHit[selector.gameObject.tag].Invoke(selector);
     }
 
-    public void AddOnInteractCallback(UnityAction<Selector> action)
+    public void AddInteractCallback(string tag, UnityAction<Selector> action)
     {
-        onInteract.AddListener(action);
+        if (!onInteract.ContainsKey(tag))
+            onInteract.Add(tag, new UnityEvent<Selector>());
+
+        onInteract[tag].AddListener(action);
     }
 
-    public void AddOnHitCallback(UnityAction<Selector> action)
+    public void AddHitCallback(string tag, UnityAction<Selector> action)
     {
-        onHit.AddListener(action);
+        if (!onHit.ContainsKey(tag))
+            onHit.Add(tag, new UnityEvent<Selector>());
+
+        onHit[tag].AddListener(action);
     }
 }

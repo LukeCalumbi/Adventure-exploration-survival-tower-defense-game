@@ -191,7 +191,11 @@ public class GridMovement : MonoBehaviour
             if (movement.GetCurrentSnapPoint() == neighbourPosition)
                 return false;
 
-            if (movement.GetNeighbourSnapPoint(movement.GetMovementDirection()) == neighbourPosition)
+            Vector3 movementNeighbour = movement.GetNeighbourSnapPoint(movement.GetMovementDirection());
+            if (movementNeighbour == neighbourPosition)
+                return false;
+
+            if (Vector2.Dot(movement.GetMovementDirection(), direction) > float.Epsilon && this.moveSpeed > movement.moveSpeed)
                 return false;
         }
 

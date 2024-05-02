@@ -9,6 +9,12 @@ TagManager:
   - Artifact
   - PlayerSelector
   - Intangible
+  - BulletSelector
+  - Zombie
+  - Minerable
+  - ZombieSelector
+  - Turret
+  - SceneLoader
   layers:
   - Default
   - TransparentFX
