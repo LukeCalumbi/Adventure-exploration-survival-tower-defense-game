@@ -28,6 +28,11 @@ public class FacingDirection : MonoBehaviour
         return GridSnapping.ClosestSnapPointOf(currentSnapPoint + 2f * GridSnapping.TILE_SIZE * facingDirection);
     }
 
+    public void Rotate()
+    {
+        Set(new Vector3(-facingDirection.y, facingDirection.x));
+    }
+
     public Vector3 Get()
     {
         return facingDirection;

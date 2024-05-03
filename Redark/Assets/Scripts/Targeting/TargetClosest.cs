@@ -7,14 +7,14 @@ public class TargetClosest : TargetingSystem
 {
     public float detectionRadiusInTiles = 5f;
 
-    public override Transform GetTarget(List<string> targetTags)
+    public override void UpdateTarget()
     {
         List<Collider2D> colliders = new List<Collider2D>(Physics2D.OverlapCircleAll(transform.position, detectionRadiusInTiles * GridSnapping.TILE_SIZE).Where(
             (Collider2D collider) => collider.gameObject != this.gameObject && targetTags.Contains(collider.tag)
         ));
 
         if (colliders.Count == 0)
-            return null;
+            return;
 
         colliders.Sort(
             delegate (Collider2D a, Collider2D b) {
@@ -24,6 +24,6 @@ public class TargetClosest : TargetingSystem
             }
         );
 
-        return colliders[0].transform;
+        cachedTarget = colliders[0].transform;
     }
 }

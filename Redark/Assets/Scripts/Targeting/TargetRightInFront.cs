@@ -14,14 +14,14 @@ public class TargetRightInFront : TargetingSystem
         facingDirection = GetComponent<FacingDirection>();
     }
 
-    public override Transform GetTarget(List<string> targetTags)
+    public override void UpdateTarget()
     {
         List<RaycastHit2D> hits = new List<RaycastHit2D>(Physics2D.RaycastAll(transform.position, facingDirection.Get(), distanceInTiles * GridSnapping.TILE_SIZE).Where(
             (RaycastHit2D hit) => hit.collider.gameObject != this.gameObject && targetTags.Contains(hit.collider.tag)
         ));
 
         if (hits.Count == 0)
-            return null;
+            return;
 
         hits.Sort(
             delegate (RaycastHit2D a, RaycastHit2D b) {
@@ -31,6 +31,6 @@ public class TargetRightInFront : TargetingSystem
             }
         );
 
-        return hits[0].collider.transform;
+        cachedTarget = hits[0].collider.transform;
     }
 }

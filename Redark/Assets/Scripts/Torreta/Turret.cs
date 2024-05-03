@@ -6,7 +6,6 @@ using UnityEngine;
 public class Turret : MonoBehaviour
 {
     public GameObject bullet;
-    public List<string> targetTags = new List<string>();
     public TargetingSystem targetingSystem;
     public float cooldownTime = 0.5f;
 
@@ -28,7 +27,7 @@ public class Turret : MonoBehaviour
 
         if (target == null)
         {
-            target = targetingSystem.GetTarget(targetTags);
+            target = targetingSystem.GetTarget();
             return;
         }
 

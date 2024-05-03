@@ -16,14 +16,14 @@ public class ClosestInDirection : TargetingSystem
         facingDirection = GetComponent<FacingDirection>();
     }
 
-    public override Transform GetTarget(List<string> targetTags)
+    public override void UpdateTarget()
     {
         List<Collider2D> colliders = new List<Collider2D>(Physics2D.OverlapCircleAll(transform.position, detectionRadiusInTiles * GridSnapping.TILE_SIZE).Where(
-            (Collider2D collider) => collider.gameObject != this.gameObject && targetTags.Contains(collider.tag)
+            (Collider2D collider) => collider.gameObject != this.gameObject && targetTags.Contains(collider.tag) && GetPreference(collider) > float.Epsilon
         ));
 
         if (colliders.Count == 0)
-            return null;
+            return;
 
         colliders.Sort(
             delegate (Collider2D a, Collider2D b) {
@@ -33,7 +33,7 @@ public class ClosestInDirection : TargetingSystem
             }
         );
 
-        return colliders[0].transform;
+        cachedTarget = colliders[0].transform;
     }
 
     public float GetPreference(Collider2D collider)
