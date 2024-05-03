@@ -6,6 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(GridSnapping))]
 public class GridMovement : MonoBehaviour
 {
+    const float KNOCKBACK_TIME = 0.3f;
+
     public float moveSpeed = 5f;
     public int stepCount = 1;
     public bool checkCollision = true;
@@ -15,7 +17,6 @@ public class GridMovement : MonoBehaviour
     Vector3 requestedDirection = Vector3.zero;
     Vector3 movementDirection = Vector3.zero;
     Vector3 targetSnapPoint = Vector3.zero;
-    bool moving = false;
 
     void Start()
     {
@@ -29,19 +30,19 @@ public class GridMovement : MonoBehaviour
         if (GameState.IsGameplayPaused())
             return;
 
-        if (!moving && requestedDirection != Vector3.zero)
+        if (IsIdle() && requestedDirection != Vector3.zero)
         {
             StartMoving(requestedDirection);
             return;
         }
 
-        if (moving && WillOvershootCurrentTile() && !IsNeighbourTileEmpty(GetMovementDirection()))
+        if (IsMoving() && WillOvershootCurrentTile() && !IsNeighbourTileEmpty(GetMovementDirection()))
         {
             StopMoving();
             return;
         }
 
-        if (moving && WillOvershootTarget())
+        if (IsMoving() && WillOvershootTarget())
         {
             if (requestedDirection == Vector3.zero || !IsNeighbourTileEmpty(requestedDirection))
             {
@@ -53,7 +54,7 @@ public class GridMovement : MonoBehaviour
             return;
         }
 
-        if (moving) 
+        if (IsMoving()) 
             MoveAndKeepDirection();
 
         requestedDirection = Vector3.zero;
@@ -73,8 +74,6 @@ public class GridMovement : MonoBehaviour
         targetSnapPoint = GetNextStepSnapPoint(direction);
         snapComponent.DisableSnapping();
         movementDirection = ClosestDirectionVector(targetSnapPoint - GetCurrentSnapPoint());
-        moving = true;
-
         MoveAndKeepDirection();
     }
 
@@ -96,10 +95,10 @@ public class GridMovement : MonoBehaviour
 
     private void StopMoving()
     {
-        transform.position = targetSnapPoint;
+        transform.position = GetCurrentSnapPoint();
         movementDirection = Vector3.zero;
+        requestedDirection = Vector3.zero;
         snapComponent.EnableSnapping();
-        moving = false;
     }
 
     public float TilesUntilTarget()
@@ -123,7 +122,7 @@ public class GridMovement : MonoBehaviour
         Vector3 distanceNow = point - transform.position;
         Vector3 distanceNext = point - GetNextPosition();
 
-        return Vector3.Dot(distanceNow, distanceNext) < 0f || distanceNow == Vector3.zero;
+        return Vector3.Dot(distanceNow, distanceNext) < 0f || (distanceNow == Vector3.zero && IsMoving());
     }
 
     public Vector3 GetCurrentSnapPoint()
@@ -165,6 +164,18 @@ public class GridMovement : MonoBehaviour
     public bool IsIdle()
     {
         return movementDirection == Vector3.zero;
+    }
+
+    public void ForceMove(Vector3 direction)
+    {
+        ForceStop();
+        StartMoving(direction);
+    }
+
+    public void ForceStop()
+    {
+        targetSnapPoint = GetCurrentSnapPoint();
+        StopMoving();
     }
 
     bool IsNeighbourTileEmpty(Vector3 direction)

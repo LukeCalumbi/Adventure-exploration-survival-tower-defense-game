@@ -19,7 +19,7 @@ public class ClosestInDirection : TargetingSystem
     public override void UpdateTarget()
     {
         List<Collider2D> colliders = new List<Collider2D>(Physics2D.OverlapCircleAll(transform.position, detectionRadiusInTiles * GridSnapping.TILE_SIZE).Where(
-            (Collider2D collider) => collider.gameObject != this.gameObject && targetTags.Contains(collider.tag) && GetPreference(collider) > float.Epsilon
+            (Collider2D collider) => collider.gameObject != this.gameObject && HasTargetTag(collider.tag) && GetPreference(collider) > float.Epsilon
         ));
 
         if (colliders.Count == 0)
@@ -42,6 +42,6 @@ public class ClosestInDirection : TargetingSystem
         float distanceValue = distanceMultiplier * distance.sqrMagnitude;
         float angleValue = angleMultiplier * Vector2.Dot(distance, facingDirection.Get());
 
-        return angleValue / distanceValue;
+        return GetPreferenceOfTag(collider.tag) * angleValue / distanceValue;
     }
 }

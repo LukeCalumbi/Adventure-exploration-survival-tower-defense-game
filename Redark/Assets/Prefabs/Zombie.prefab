@@ -135,13 +135,18 @@ GameObject:
   - component: {fileID: 3272248971186134374}
   - component: {fileID: 4400322630619893515}
   - component: {fileID: 4093781383208642283}
-  - component: {fileID: 6617596393348890365}
   - component: {fileID: 890626208802679247}
   - component: {fileID: 1949535041679861440}
   - component: {fileID: 8732159903129705361}
   - component: {fileID: 5840868922817279121}
   - component: {fileID: 4894330544207889485}
   - component: {fileID: 8829646677186336739}
+  - component: {fileID: 5992539527279898399}
+  - component: {fileID: 633484637620823677}
+  - component: {fileID: 993298950702627009}
+  - component: {fileID: 2009829979961243213}
+  - component: {fileID: 8977584870051381874}
+  - component: {fileID: 607785907544079155}
   m_Layer: 0
   m_Name: Zombie
   m_TagString: Zombie
@@ -303,22 +308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db9897734647fbde5a7ce26fd6116a04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6617596393348890365
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5680414163916081163}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fcc49c31150946f4a2e6fdf7b15ddf4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetTags:
-  - Player
-  radius: 5
-  minDistance: 0.5
+  targetingSystem: {fileID: 993298950702627009}
 --- !u!114 &890626208802679247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -396,3 +386,97 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc0cd6cfcdc311440aaa927bb5557b92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5992539527279898399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5680414163916081163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1f2bbbd189a0ddbeb6ab0da1ecc377b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeInKnockback: 0.5
+--- !u!114 &633484637620823677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5680414163916081163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d44c53c3f78abd8c1844f07e943e6b4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onInteractTags: []
+  onHitTags:
+  - PlayerSelector
+  defaultKnockSpeed: 1
+  defaultStepCount: 1
+--- !u!114 &993298950702627009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5680414163916081163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18973e3a09b566bfeb1dddb1b531d27d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetTags:
+  - tag: Artifact
+    preference: 5
+  - tag: Turret
+    preference: 4
+  - tag: Player
+    preference: 3
+  - tag: Minerable
+    preference: 2
+  - tag: Friendly
+    preference: 1
+  detectionRadiusInTiles: 5
+--- !u!114 &2009829979961243213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5680414163916081163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fe200c2c679f6fdf9ab3c20bf745ee5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeInKnockdown: 2
+--- !u!114 &8977584870051381874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5680414163916081163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24118501380b3244e83772e8ac830551, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &607785907544079155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5680414163916081163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 431d18cd3a0d0861097716cb0e9a635f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onInteractTags: []
+  onHitTags:
+  - PlayerSelector

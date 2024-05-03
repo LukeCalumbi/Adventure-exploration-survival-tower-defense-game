@@ -16,8 +16,7 @@ public class TakeDamageInteracable : InteractableFunction
 
     public override void Action(Selector selector)
     {
-        Debug.Log(string.Format("{0} : gay", tag));
         Damage damage = selector.gameObject.GetComponent<Damage>();
-        health.DoDamage(damage != null ? damage.GetDamage() : defaultDamage);
+        health.DoDamage(damage != null ? damage.damage : defaultDamage);
     }
 }

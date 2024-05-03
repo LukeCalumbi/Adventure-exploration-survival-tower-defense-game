@@ -19,20 +19,31 @@ public class DamageByTime : MonoBehaviour
         timer.Start();
     }
 
-    void FixedUpdate()
+    void Update()
     {
         if (GameState.IsGameplayPaused())
             return;
 
         if (timer.Finished()) 
         {
-            if (killOnFinish)
+            if (killOnFinish) 
+            {
                 health.Kill();
+                return;
+            }
             else
                 health.DoDamage(damage);
 
             timer.Start();
         }
+
+        timer.Update(Time.fixedDeltaTime);
+    }
+
+    void FixedUpdate()
+    {
+        if (GameState.IsGameplayPaused())
+            return;
 
         timer.Update(Time.fixedDeltaTime);
     }

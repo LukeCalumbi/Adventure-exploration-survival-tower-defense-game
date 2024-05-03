@@ -377,7 +377,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetTags:
-  - Zombie
+  - tag: Zombie
+    preference: 1
   distanceInTiles: 5
 --- !u!114 &2276060019264340504
 MonoBehaviour:

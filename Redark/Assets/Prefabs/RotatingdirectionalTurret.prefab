@@ -137,7 +137,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetTags:
-  - Zombie
+  - tag: Zombie
+    preference: 1
   detectionRadiusInTiles: 5
   distanceMultiplier: 2
   angleMultiplier: 1

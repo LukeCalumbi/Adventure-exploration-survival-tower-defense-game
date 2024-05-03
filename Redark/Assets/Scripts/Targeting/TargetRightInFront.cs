@@ -17,7 +17,7 @@ public class TargetRightInFront : TargetingSystem
     public override void UpdateTarget()
     {
         List<RaycastHit2D> hits = new List<RaycastHit2D>(Physics2D.RaycastAll(transform.position, facingDirection.Get(), distanceInTiles * GridSnapping.TILE_SIZE).Where(
-            (RaycastHit2D hit) => hit.collider.gameObject != this.gameObject && targetTags.Contains(hit.collider.tag)
+            (RaycastHit2D hit) => hit.collider.gameObject != this.gameObject && HasTargetTag(hit.collider.tag)
         ));
 
         if (hits.Count == 0)
@@ -25,8 +25,8 @@ public class TargetRightInFront : TargetingSystem
 
         hits.Sort(
             delegate (RaycastHit2D a, RaycastHit2D b) {
-                float distA = Vector2.Distance(transform.position, a.collider.transform.position);
-                float distB = Vector2.Distance(transform.position, b.collider.transform.position);
+                float distA = Vector2.Distance(transform.position, a.collider.transform.position) / GetPreferenceOfTag(a.collider.tag);
+                float distB = Vector2.Distance(transform.position, b.collider.transform.position) / GetPreferenceOfTag(b.collider.tag);
                 return (distA < distB) ? -1 : (distA > distB) ? 1 : 0;
             }
         );

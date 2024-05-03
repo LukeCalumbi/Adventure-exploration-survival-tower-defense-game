@@ -9,8 +9,9 @@ using UnityEngine;
 [RequireComponent(typeof(GridMovement))]
 public class FollowTarget : MonoBehaviour
 {   
+    public TargetingSystem targetingSystem;
+
     GridMovement movement;
-    Vector3 target = Vector3.zero;
     bool isTargeting = false;
 
     void Start()
@@ -32,13 +33,12 @@ public class FollowTarget : MonoBehaviour
         movement.MoveTowardsDirection(GetTargetDirection());
     }
 
-    public void Target(Vector3 target)
+    public void StartFollowing()
     {
-        this.target = target;
         isTargeting = true;
     }
 
-    public void Stop()
+    public void StopFollowing()
     {
         isTargeting = false;
     }
@@ -50,12 +50,18 @@ public class FollowTarget : MonoBehaviour
 
     public Vector3 GetTargetDirection()
     {
-        return target - this.transform.position;
+        if (targetingSystem.GetTarget() == null)
+            return Vector3.zero;
+
+        return targetingSystem.GetTarget().position - this.transform.position;
     }
 
     private void OnDrawGizmos() // desenha linha ate target
     {
-        if(this.target != null) 
-            Gizmos.DrawLine(this.transform.position,target);
+        if (targetingSystem == null)
+            return;
+
+        if(targetingSystem.GetTarget() != null) 
+            Gizmos.DrawLine(this.transform.position, targetingSystem.GetTarget().position);
     }
 }
