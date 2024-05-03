@@ -13,6 +13,7 @@ public class GridMovement : MonoBehaviour
 
     GridSnapping snapComponent;
     Vector3 requestedDirection = Vector3.zero;
+    Vector3 movementDirection = Vector3.zero;
     Vector3 targetSnapPoint = Vector3.zero;
     bool moving = false;
 
@@ -25,6 +26,9 @@ public class GridMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (GameState.IsGameplayPaused())
+            return;
+
         if (!moving && requestedDirection != Vector3.zero)
         {
             StartMoving(requestedDirection);
@@ -68,6 +72,7 @@ public class GridMovement : MonoBehaviour
 
         targetSnapPoint = GetNextStepSnapPoint(direction);
         snapComponent.DisableSnapping();
+        movementDirection = ClosestDirectionVector(targetSnapPoint - GetCurrentSnapPoint());
         moving = true;
 
         MoveAndKeepDirection();
@@ -81,6 +86,7 @@ public class GridMovement : MonoBehaviour
 
         transform.position = targetSnapPoint + direction * remainingMovement;
         targetSnapPoint = GetNextStepSnapPoint(direction);
+        movementDirection = ClosestDirectionVector(targetSnapPoint - GetCurrentSnapPoint());
     }
 
     private void MoveAndKeepDirection()
@@ -91,6 +97,7 @@ public class GridMovement : MonoBehaviour
     private void StopMoving()
     {
         transform.position = targetSnapPoint;
+        movementDirection = Vector3.zero;
         snapComponent.EnableSnapping();
         moving = false;
     }
@@ -142,26 +149,22 @@ public class GridMovement : MonoBehaviour
 
     public Vector3 GetMovementDirection()
     {
-        if (!moving)
-            return Vector3.zero;
-
-        return (targetSnapPoint - transform.position).normalized;
+        return movementDirection;
     }
 
     public Vector3 GetNextPosition()
     {
-        Vector3 direction = GetMovementDirection();
-        return transform.position + direction * moveSpeed * Time.fixedDeltaTime;
+        return transform.position + movementDirection * moveSpeed * Time.fixedDeltaTime;
     }
 
     public bool IsMoving()
     {
-        return moving;
+        return movementDirection != Vector3.zero;
     }
 
     public bool IsIdle()
     {
-        return !moving;
+        return movementDirection == Vector3.zero;
     }
 
     bool IsNeighbourTileEmpty(Vector3 direction)

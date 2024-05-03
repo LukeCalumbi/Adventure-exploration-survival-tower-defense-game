@@ -21,6 +21,9 @@ public class PlayerSelector : MonoBehaviour
 
     void Update()
     {
+        if (GameState.IsGameplayPaused())
+            return;
+
         if (selector == null)
         {
             Destroy(this.gameObject);

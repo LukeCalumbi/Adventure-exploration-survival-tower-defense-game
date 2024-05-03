@@ -19,6 +19,9 @@ public class Turret : MonoBehaviour
     }
     void FixedUpdate()
     {
+        if (GameState.IsGameplayPaused())
+            return;
+
         if (cooldown.IsRunning())
         {
             cooldown.Update(Time.fixedDeltaTime);

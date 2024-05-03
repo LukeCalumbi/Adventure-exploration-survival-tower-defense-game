@@ -22,6 +22,9 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (GameState.IsGameplayPaused())
+            return;
+
         Vector3 direction = GetDirection();
 
         if (direction == Vector3.zero)
@@ -46,6 +49,9 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (GameState.IsGameplayPaused())
+            return;
+
         walkInDifferentDirectionTimer.Update(Time.fixedDeltaTime);
     }
 

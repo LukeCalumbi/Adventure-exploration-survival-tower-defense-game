@@ -21,6 +21,9 @@ public class DamageByTime : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (GameState.IsGameplayPaused())
+            return;
+
         if (timer.Finished()) 
         {
             if (killOnFinish)

@@ -11,12 +11,18 @@ public class Interactable : MonoBehaviour
 
     public void Interact(Selector selector)
     {
+        if (GameState.IsGameplayPaused())
+            return;
+
         if (onInteract.ContainsKey(selector.gameObject.tag))
             onInteract[selector.gameObject.tag].Invoke(selector);
     }
 
     public void Hit(Selector selector)
     {
+        if (GameState.IsGameplayPaused())
+            return;
+
         if (onHit.ContainsKey(selector.gameObject.tag))
             onHit[selector.gameObject.tag].Invoke(selector);
     }

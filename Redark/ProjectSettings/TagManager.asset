@@ -15,6 +15,7 @@ TagManager:
   - ZombieSelector
   - Turret
   - SceneLoader
+  - PlayerInteractable
   layers:
   - Default
   - TransparentFX
