@@ -143,10 +143,15 @@ GameObject:
   - component: {fileID: 8829646677186336739}
   - component: {fileID: 5992539527279898399}
   - component: {fileID: 633484637620823677}
+  - component: {fileID: 26330052443095898}
   - component: {fileID: 993298950702627009}
   - component: {fileID: 2009829979961243213}
   - component: {fileID: 8977584870051381874}
   - component: {fileID: 607785907544079155}
+  - component: {fileID: 3444759354573320368}
+  - component: {fileID: 2297988594784961133}
+  - component: {fileID: 3572330595141275860}
+  - component: {fileID: 7354175866440364377}
   m_Layer: 0
   m_Name: Zombie
   m_TagString: Zombie
@@ -308,7 +313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db9897734647fbde5a7ce26fd6116a04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetingSystem: {fileID: 993298950702627009}
+  targetingSystem: {fileID: 26330052443095898}
 --- !u!114 &890626208802679247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -416,6 +421,23 @@ MonoBehaviour:
   - PlayerSelector
   defaultKnockSpeed: 1
   defaultStepCount: 1
+--- !u!114 &26330052443095898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5680414163916081163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f03873994a67f84ccad2550635606c37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetTags: []
+  systems:
+  - {fileID: 993298950702627009}
+  - {fileID: 3444759354573320368}
+  - {fileID: 3572330595141275860}
 --- !u!114 &993298950702627009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -440,6 +462,8 @@ MonoBehaviour:
   - tag: Friendly
     preference: 1
   detectionRadiusInTiles: 5
+  minDistance: 0
+  checkVisibility: 0
 --- !u!114 &2009829979961243213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -480,3 +504,73 @@ MonoBehaviour:
   onInteractTags: []
   onHitTags:
   - PlayerSelector
+--- !u!114 &3444759354573320368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5680414163916081163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6f173263ab96afeb8eb55d35d18f524, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetTags: []
+  support: {fileID: 2297988594784961133}
+  ignore: []
+--- !u!114 &2297988594784961133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5680414163916081163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18973e3a09b566bfeb1dddb1b531d27d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetTags:
+  - tag: Zombie
+    preference: 1
+  detectionRadiusInTiles: 10
+  minDistance: 2
+  checkVisibility: 1
+--- !u!114 &3572330595141275860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5680414163916081163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea9ee1fad8c72effe910a56a4859a050, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetTags: []
+  support: {fileID: 7354175866440364377}
+  maxDistanceToVertex: 8
+--- !u!114 &7354175866440364377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5680414163916081163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18973e3a09b566bfeb1dddb1b531d27d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetTags:
+  - tag: Artifact
+    preference: 10
+  - tag: Turret
+    preference: 5
+  - tag: Player
+    preference: 3
+  detectionRadiusInTiles: 50
+  minDistance: 2
+  checkVisibility: 1

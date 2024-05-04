@@ -53,15 +53,17 @@ public class FollowTarget : MonoBehaviour
         if (targetingSystem.GetTarget() == null)
             return Vector3.zero;
 
-        return targetingSystem.GetTarget().position - this.transform.position;
+        return targetingSystem.GetTarget().Value - this.transform.position;
     }
 
     private void OnDrawGizmos() // desenha linha ate target
     {
+        return;
+        
         if (targetingSystem == null)
             return;
 
         if(targetingSystem.GetTarget() != null) 
-            Gizmos.DrawLine(this.transform.position, targetingSystem.GetTarget().position);
+            Gizmos.DrawLine(this.transform.position, targetingSystem.GetTarget().Value);
     }
 }

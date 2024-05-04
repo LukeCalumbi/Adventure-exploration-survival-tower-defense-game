@@ -15,10 +15,10 @@ public class RotateTowardsTarget : MonoBehaviour
 
     void Update()
     {
-        Transform target = targetingSystem.GetTarget();
+        Vector3? target = targetingSystem.GetTarget();
 
         if (target != null) {
-            SetRotation(target.position);
+            SetRotation(target.Value);
             return;
         }
         

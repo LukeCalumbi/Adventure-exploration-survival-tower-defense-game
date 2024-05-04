@@ -7,7 +7,7 @@ public class ZombieGlobalPath : MonoBehaviour
 {
     public List<VectorEdge> edges = new List<VectorEdge>();
 
-    Graph worldPaths;
+    public static Graph worldPaths;
 
     void Start()
     {
@@ -29,15 +29,17 @@ public class ZombieGlobalPath : MonoBehaviour
         Debug.Log(worldPaths.GetMatrix());
     }
 
-    void FixedUpdate()
+    public static KeyValuePair<int, Vector3> ClosestVertexTo(Vector3 point)
     {
-        if (worldPaths == null)
-            return;
+        return worldPaths.GetClosestPointInGraph(point);
+    }
 
-        int start = UnityEngine.Random.Range(0, worldPaths.VertexCount());
-        int end = UnityEngine.Random.Range(0, worldPaths.VertexCount());
+    public static GraphPath PathTo(Vector3 from, Vector3 to)
+    {
+        KeyValuePair<int, Vector3> start = worldPaths.GetClosestPointInGraph(from);
+        KeyValuePair<int, Vector3> end = worldPaths.GetClosestPointInGraph(to);
 
-        Debug.Log(String.Format("de {0} ate {1} grafo diz {2}", worldPaths.GetVertex(start), worldPaths.GetVertex(end), worldPaths.GetRandomPathTo(start, end)));
+        return worldPaths.GetRandomPathTo(start.Key, end.Key);
     }
 
     void OnDrawGizmos()

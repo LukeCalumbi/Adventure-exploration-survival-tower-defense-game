@@ -8,7 +8,8 @@ public class TargetingSystem : MonoBehaviour
 {
     [SerializeField] public List<Target> targetTags = new List<Target>();
     
-    protected Transform cachedTarget = null;
+    protected Vector3? cachedTarget = null;
+    protected GameObject cachedObject = null;
 
     bool updatedCache = false;
 
@@ -18,7 +19,7 @@ public class TargetingSystem : MonoBehaviour
         updatedCache = false;
     }
 
-    public Transform GetTarget()
+    public Vector3? GetTarget()
     {
         if (!updatedCache)
         {
@@ -27,6 +28,17 @@ public class TargetingSystem : MonoBehaviour
         }
 
         return cachedTarget;
+    }
+
+    public GameObject GetTargetObject()
+    {
+        if (!updatedCache)
+        {
+            UpdateTarget();
+            updatedCache = true;
+        }
+
+        return cachedObject;
     }
 
     public bool HasTargetTag(string tag)

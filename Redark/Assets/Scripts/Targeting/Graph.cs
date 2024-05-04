@@ -53,7 +53,7 @@ public class Graph
         return path;
     }
 
-    public Vector3 GetClosestPointInGraph(Vector3 vector)
+    public KeyValuePair<int, Vector3> GetClosestPointInGraph(Vector3 vector)
     {
         List<KeyValuePair<int, Vector3>> vertices = new List<KeyValuePair<int, Vector3>>();
         for (int i = 0; i < this.vertices.Count; i++)
@@ -68,7 +68,7 @@ public class Graph
             }
         );
 
-        return vertices[0].Value;
+        return vertices[0];
     }
 
     static GraphPath GetRandomPath(SquareMatrix<float> distanceMatrix, int start, int end)
@@ -170,9 +170,47 @@ public class GraphPath
         this.totalLength = totalLength;
     }
 
+    public int GetFirst()
+    {
+        return vertices.Last();
+    }
+
+    public int GetLast()
+    {
+        return vertices.First();
+    }
+
+    public int GetSecond()
+    {
+        if (vertices.Count < 2)
+            return -1;
+
+        return vertices[vertices.Count - 2];
+    }
+
     public bool IsValid()
     {
         return totalLength >= 0f && vertices != null;
+    }
+
+    public void Invalidate()
+    {
+        vertices = null;
+        totalLength = -1f;
+    }
+
+    public void RemoveStart(Graph graph)
+    {
+        if (vertices.Count <= 1)
+        {
+            Invalidate();
+            return;
+        }
+
+        Vector3 start = graph.GetVertex(GetFirst());
+        Vector3 next = graph.GetVertex(GetSecond());
+        totalLength -= (next - start).sqrMagnitude;
+        vertices.RemoveAt(vertices.Count - 1);
     }
 
     public override string ToString()

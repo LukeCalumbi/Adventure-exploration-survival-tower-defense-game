@@ -7,7 +7,9 @@ using UnityEngine;
 public class TargetRightInFront : TargetingSystem
 {
     public float distanceInTiles = 5f;
+    public float minDistance = 2f;
     FacingDirection facingDirection;
+    bool checkVisibility = false;
 
     void Start()
     {
@@ -16,12 +18,17 @@ public class TargetRightInFront : TargetingSystem
 
     public override void UpdateTarget()
     {
-        List<RaycastHit2D> hits = new List<RaycastHit2D>(Physics2D.RaycastAll(transform.position, facingDirection.Get(), distanceInTiles * GridSnapping.TILE_SIZE).Where(
-            (RaycastHit2D hit) => hit.collider.gameObject != this.gameObject && HasTargetTag(hit.collider.tag)
-        ));
+        List<RaycastHit2D> hits = new List<RaycastHit2D>(Physics2D.RaycastAll(transform.position, facingDirection.Get(), distanceInTiles * GridSnapping.TILE_SIZE)
+            .Where((RaycastHit2D hit) => hit.collider.gameObject != this.gameObject && Vector3.Distance(transform.position, hit.collider.transform.position) >= minDistance)
+            .TakeWhile((RaycastHit2D hit) => !checkVisibility || HasTargetTag(hit.collider.tag))
+        );
 
         if (hits.Count == 0)
+        {
+            cachedObject = null;
+            cachedTarget = null;
             return;
+        }
 
         hits.Sort(
             delegate (RaycastHit2D a, RaycastHit2D b) {
@@ -31,6 +38,7 @@ public class TargetRightInFront : TargetingSystem
             }
         );
 
-        cachedTarget = hits[0].collider.transform;
+        cachedObject = hits[0].collider.gameObject;
+        cachedTarget = hits[0].collider.transform.position;
     }
 }

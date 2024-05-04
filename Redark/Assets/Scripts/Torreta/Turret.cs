@@ -10,7 +10,7 @@ public class Turret : MonoBehaviour
     public float cooldownTime = 0.5f;
 
     Timer cooldown;
-    Transform target = null;
+    Vector3? target = null;
 
     void Start()
     {
@@ -45,6 +45,6 @@ public class Turret : MonoBehaviour
         MoveTowardsDirection moveTowardsDirection = gameObject.GetComponent<MoveTowardsDirection>();
 
         if (moveTowardsDirection != null)
-            moveTowardsDirection.SetDirection(target.transform.position - transform.position);
+            moveTowardsDirection.SetDirection(target.Value - transform.position);
     }
 }

@@ -19,6 +19,9 @@ public class ZombieSelector : MonoBehaviour
 
     void Update()
     {
+        if (GameState.IsGameplayPaused())
+            return;
+
         if (selector == null)
         {
             Destroy(this.gameObject);
@@ -39,6 +42,9 @@ public class ZombieSelector : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (GameState.IsGameplayPaused())
+            return;
+
         actionTimer.Update(Time.fixedDeltaTime);
     }
 }
