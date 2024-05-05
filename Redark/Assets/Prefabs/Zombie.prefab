@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 2297988594784961133}
   - component: {fileID: 3572330595141275860}
   - component: {fileID: 7354175866440364377}
+  - component: {fileID: 4244402086832528628}
   m_Layer: 0
   m_Name: Zombie
   m_TagString: Zombie
@@ -210,8 +211,8 @@ SpriteRenderer:
   m_SortingLayerID: 543850081
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 0.01724416, b: 0.01724416, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 2b1689ebd75850a4da9d692f809a6420, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -430,7 +431,11 @@ MonoBehaviour:
   targetTags: []
   systems:
   - {fileID: 993298950702627009}
+<<<<<<< Updated upstream
   - {fileID: 3444759354573320368}
+=======
+  - {fileID: 3572330595141275860}
+>>>>>>> Stashed changes
 --- !u!114 &993298950702627009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -567,3 +572,37 @@ MonoBehaviour:
   detectionRadiusInTiles: 50
   minDistance: 2
   checkVisibility: 1
+--- !u!114 &4244402086832528628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5680414163916081163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51a958aaaaf87bcb78b30687f58e655e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridMovement: {fileID: 4400322630619893515}
+  facingDirection: {fileID: 890626208802679247}
+  timeBetweenFrames: 0.16
+  up:
+  - frame: {fileID: 21300000, guid: 1770cf2071d76eb419f5b8ab4be0a073, type: 3}
+    flipX: 0
+    flipY: 0
+  down:
+  - frame: {fileID: 21300000, guid: 2b1689ebd75850a4da9d692f809a6420, type: 3}
+    flipX: 0
+    flipY: 0
+  - frame: {fileID: 21300000, guid: 4f407c55ef8ee0d449d6949a3a3d0555, type: 3}
+    flipX: 0
+    flipY: 0
+  left:
+  - frame: {fileID: 21300000, guid: 9a11d05d5ebe0a4489025b5f1a50c261, type: 3}
+    flipX: 0
+    flipY: 0
+  right:
+  - frame: {fileID: 21300000, guid: 9a11d05d5ebe0a4489025b5f1a50c261, type: 3}
+    flipX: 1
+    flipY: 0
