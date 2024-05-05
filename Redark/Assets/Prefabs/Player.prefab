@@ -642,8 +642,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items:
   - name: Artifact
-    image: {fileID: -424483102, guid: fb79f2a880548482b95d4bc221813228, type: 3}
-    gameObject: {fileID: 7252444725810866585, guid: 519a2e9591ed91b57b9f90329be55a91, type: 3}
+    image: {fileID: 21300000, guid: 17469bc1a29cc7a3091a77218a2ecb9a, type: 3}
+    gameObject: {fileID: 7539176413287987262, guid: f40df3e60656202eab48e14a79349bcf, type: 3}
     cost: 0
     isUnique: 1
   - name: SetDirectionTurret
