@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public class Counter
 {
-    private int max;
-    private int current;
+    [SerializeField] private int max;
+    [SerializeField] private int current;
 
     public Counter(int max)
     {

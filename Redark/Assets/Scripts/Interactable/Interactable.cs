@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -42,4 +43,7 @@ public class Interactable : MonoBehaviour
 
         onHit[tag].AddListener(action);
     }
+
+    public bool InteractsWith(string tag) => onInteract.Keys.Any((string interactTag) => interactTag == tag);
+    public bool GetsHitBy(string tag) => onHit.Keys.Any((string interactTag) => interactTag == tag);
 }

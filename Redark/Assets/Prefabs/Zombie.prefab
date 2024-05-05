@@ -62,12 +62,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 782d4900cfb08f5fc8ca7e6c3ffaefc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  authorizedTags:
-  - Artifact
-  - Minerable
-  - Player
-  - Friendly
-  - Turret
   detectionTiles: 1
 --- !u!114 &8951576031982743265
 MonoBehaviour:
@@ -213,8 +207,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 543850081
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 0.01724416, b: 0.01724416, a: 1}
