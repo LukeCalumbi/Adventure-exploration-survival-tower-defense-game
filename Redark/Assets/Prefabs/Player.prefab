@@ -651,16 +651,6 @@ MonoBehaviour:
     gameObject: {fileID: 6470039280629615013, guid: d07e86e0fe24f00f4a45f798b1da01fb, type: 3}
     cost: 1
     isUnique: 0
-  - name: RotatingTurret
-    image: {fileID: 666955289, guid: fb79f2a880548482b95d4bc221813228, type: 3}
-    gameObject: {fileID: 4108401336893996694, guid: e5c38406f9562142c905d207f183b0db, type: 3}
-    cost: 2
-    isUnique: 0
-  - name: OmnidirectionalTurret
-    image: {fileID: -424483102, guid: fb79f2a880548482b95d4bc221813228, type: 3}
-    gameObject: {fileID: 7252444725810866585, guid: 519a2e9591ed91b57b9f90329be55a91, type: 3}
-    cost: 3
-    isUnique: 0
 --- !u!1 &8290311043699489519
 GameObject:
   m_ObjectHideFlags: 0
