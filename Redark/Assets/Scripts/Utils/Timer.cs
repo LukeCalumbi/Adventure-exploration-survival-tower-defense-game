@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // All time related variables are in Seconds
+[Serializable]
 public class Timer 
 {
-    private float waitTime = 1f;
+    [SerializeField] private float waitTime = 1f;
     private float timeElapsed = 0f;
     private bool isPaused = true;
     private bool neverRan = true;

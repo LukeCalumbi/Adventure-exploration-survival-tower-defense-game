@@ -21,11 +21,18 @@ public class PlayerSelectorImage : MonoBehaviour
 
     void LateUpdate()
     {
-        bool isSelectingSomething = selector.IsSelectingSomething();
+        GameObject selectedObject = selector.GetSelectedObject();
         Item selectedItem = Inventory.GetSelectedItem();
         bool isItemPlaceable = Inventory.IsItemPlaceable(selectedItem);
 
-        spriteRenderer.sprite = isSelectingSomething ? selectorSprite : selectedItem.image;
-        spriteRenderer.color = Color.white * (isSelectingSomething ? 1.0f : isItemPlaceable ? 0.8f : 0.2f); 
+        spriteRenderer.sprite = selectedObject != null ? selectorSprite : selectedItem.image;
+
+        if (selectedObject != null) {
+            Interactable interactable = selectedObject.GetComponent<Interactable>();
+            spriteRenderer.color = Color.white * (interactable != null && (interactable.InteractsWith(tag) || interactable.GetsHitBy(tag)) ? 1f : 0f);
+            return;
+        }
+
+        spriteRenderer.color = Color.white * (isItemPlaceable ? 0.8f : 0.35f);
     }
 }

@@ -49,6 +49,17 @@ public class Inventory : MonoBehaviour
         itemInfo[item] = new ItemWorldInfo();
     }
 
+    public static Item GetItem(string name)
+    {
+        foreach (Item item in itemInfo.Keys)
+        {
+            if (item.name == name)
+                return item;
+        }
+
+        return null;
+    }
+
     public static bool IsSelectedItemPlaceable()
     {
         return IsItemPlaceable(GetSelectedItem());

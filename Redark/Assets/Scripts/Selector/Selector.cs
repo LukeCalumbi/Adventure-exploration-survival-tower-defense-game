@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -14,7 +15,6 @@ public enum InteractError
 
 public class Selector : MonoBehaviour
 {
-    public List<string> authorizedTags = new List<string>();
     public float detectionTiles = 1.0f;
     public InteractError TryInteract()
     {
@@ -48,9 +48,7 @@ public class Selector : MonoBehaviour
 
     public GameObject GetSelectedObject()
     {
-        List<Collider2D> colliders = new List<Collider2D>(Physics2D.OverlapBoxAll(transform.position, Vector2.one * (detectionTiles * GridSnapping.TILE_SIZE - 0.1f), 0f).Where(
-            (Collider2D collider) => authorizedTags.Contains(collider.gameObject.tag)
-        ));
+        List<Collider2D> colliders = new List<Collider2D>(Physics2D.OverlapBoxAll(transform.position, Vector2.one * (detectionTiles * GridSnapping.TILE_SIZE - 0.1f), 0f));
         
         if (colliders.Count == 0)
             return null;
