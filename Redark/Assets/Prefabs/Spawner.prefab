@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5998534799985085504}
   - component: {fileID: 6902932816459771169}
   - component: {fileID: 7669900041560619121}
+  - component: {fileID: 8887185870170151956}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -63,6 +64,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   components:
   - {fileID: 5998534799985085504}
+  - {fileID: 8887185870170151956}
   disableOnDay: 1
   disableOnNight: 0
 --- !u!114 &7669900041560619121
@@ -78,3 +80,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keepSnapping: 1
+--- !u!114 &8887185870170151956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6555349511158708827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cf3c3193f041c55ca0a2bcef40b5ccd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toEnable: {fileID: 5998534799985085504}
+  targetTag: Player
+  distanceToEnable: 15
