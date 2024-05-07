@@ -42,6 +42,15 @@ public class CharacterAnimator : MonoBehaviour
             return;
         }
 
+        Vector3 facing = facingDirection.Get();
+        Vector3 movement = gridMovement.GetMovementDirection();
+
+        if (facing == Vector3.zero && movement == Vector3.zero) 
+        {
+            ChangeTo(Vector3.right);
+            return;
+        }
+
         if (gridMovement.IsIdle())
             ChangeTo(facingDirection.Get());
 

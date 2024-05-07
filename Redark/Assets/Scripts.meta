@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<< HEAD
-guid: 9e725f5d0a437bada9055ec0e0571b1e
-=======
-guid: c49825ee6ff45e47e9403dc99c7c8c3a
->>>>>>> 1832ed3 (Added GridSnapping Component and GridMovement Component)
+guid: f5721960de32ecf40853a0fc12d0e1fa
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
