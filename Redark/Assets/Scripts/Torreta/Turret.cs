@@ -40,7 +40,9 @@ public class Turret : MonoBehaviour
     }
 
     void Shoot()
-    {
+    {   
+        Debug.Log(targetingSystem.GetTargetObject().transform.position);
+        Debug.Log(targetingSystem.GetTargetObject().tag);
         GameObject gameObject = Instantiate(bullet, transform.position, Quaternion.identity);
         MoveTowardsDirection moveTowardsDirection = gameObject.GetComponent<MoveTowardsDirection>();
 

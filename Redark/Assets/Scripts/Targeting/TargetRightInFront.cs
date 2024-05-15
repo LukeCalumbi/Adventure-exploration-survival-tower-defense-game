@@ -20,7 +20,8 @@ public class TargetRightInFront : TargetingSystem
     {
         List<RaycastHit2D> hits = new List<RaycastHit2D>(Physics2D.RaycastAll(transform.position, facingDirection.Get(), distanceInTiles * GridSnapping.TILE_SIZE)
             .Where((RaycastHit2D hit) => hit.collider.gameObject != this.gameObject && Vector3.Distance(transform.position, hit.collider.transform.position) >= minDistance)
-            .TakeWhile((RaycastHit2D hit) => !checkVisibility || HasTargetTag(hit.collider.tag))
+            .TakeWhile((RaycastHit2D hit) => !checkVisibility && HasTargetTag(hit.collider.tag))
+            .Where((RaycastHit2D hit) => HasTargetTag(hit.collider.tag))
         );
 
         if (hits.Count == 0)

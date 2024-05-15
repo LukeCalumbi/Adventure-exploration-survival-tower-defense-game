@@ -30,7 +30,7 @@ public class DayNightCicle : MonoBehaviour
 
         wholeDayTimer.Update(Time.fixedDeltaTime);
         wholeDayTimer.StartIfNotRunning();
-        Debug.Log(String.Format("{0}: {1}", IsDay() ? "Day" : "Night", GetHourStr()));
+        //Debug.Log(String.Format("{0}: {1}", IsDay() ? "Day" : "Night", GetHourStr()));
     }
 
     public static bool IsDay()

@@ -69,8 +69,7 @@ public class TargetingSystem : MonoBehaviour
     }
 }
 
-[Serializable]
-public class Target
+[Serializable] public class Target
 {
     [SerializeField] public string tag;
     [SerializeField] public float preference;
