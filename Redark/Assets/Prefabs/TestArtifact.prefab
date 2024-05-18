@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 9053578184365616755}
   - component: {fileID: 8964430029258511501}
   - component: {fileID: 5701364303388204188}
+  - component: {fileID: 4924869749043096087}
   m_Layer: 0
   m_Name: TestArtifact
   m_TagString: Artifact
@@ -203,7 +204,6 @@ MonoBehaviour:
   onInteractTags: []
   onHitTags:
   - ZombieSelector
-  - PlayerSelector
   defaultDamage: 1
 --- !u!114 &9053578184365616755
 MonoBehaviour:
@@ -246,3 +246,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbbef0c80967d4a96b6b131fe17aa433, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4924869749043096087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7539176413287987262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f34e4d81aaff46cea33c0d739231f25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onInteractTags: []
+  onHitTags:
+  - PlayerSelector
