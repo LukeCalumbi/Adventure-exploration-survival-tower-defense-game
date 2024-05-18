@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    
     public int maxHealth = 10;
     Counter health;
 
@@ -46,5 +45,11 @@ public class Health : MonoBehaviour
     public float GetHealthPercentage()
     {
         return health.GetCompletionPercentage();
+    }
+
+    public void SyncWith(Counter counter)
+    {
+        var difference = counter.GetCurrentCount() - health.GetCurrentCount();
+        Regenerate(difference);
     }
 }

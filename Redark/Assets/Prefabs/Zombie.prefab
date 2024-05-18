@@ -431,8 +431,8 @@ MonoBehaviour:
   targetTags: []
   systems:
   - {fileID: 993298950702627009}
-  - {fileID: 3444759354573320368}
   - {fileID: 1326302696377188783}
+  - {fileID: 3444759354573320368}
 --- !u!114 &993298950702627009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -546,8 +546,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTags: []
   support: {fileID: 7354175866440364377}
-  tolerance: 3
-  pathUpdateCount: 3
+  tolerance: 5
+  pathUpdateCount: 1
 --- !u!114 &7354175866440364377
 MonoBehaviour:
   m_ObjectHideFlags: 0

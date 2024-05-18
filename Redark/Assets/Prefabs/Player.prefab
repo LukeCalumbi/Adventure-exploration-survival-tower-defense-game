@@ -570,6 +570,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 775dfaac842bb29deab4da7869f00210, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthComponent: {fileID: 2467481623425784379}
   isPlayer: 1
 --- !u!114 &1916394270600625091
 MonoBehaviour:

@@ -7,7 +7,7 @@ using UnityEngine;
 public class TargetClosestPath : TargetingSystem
 {
     public TargetingSystem support;
-    public float tolerance = 3f;
+    public float tolerance = 5f;
     public int pathUpdateCount = 3;
 
     private readonly Path _cachedPath = new Path();
@@ -46,12 +46,12 @@ public class TargetClosestPath : TargetingSystem
             MakeNewPath(target.Value, targetObject.tag);
             return;
         }
+        
+        for (int i = 0; i < pathUpdateCount; i++)
+            _nodePathGenerator.Next();
 
         if (_cachedPath.GetPointCount() <= 1)
         {
-            for (int i = 0; i < pathUpdateCount; i++)
-                _nodePathGenerator.Next();
-
             var current = _nodePathGenerator.GetCurrentClosestNode();
             try
             {
@@ -60,10 +60,6 @@ public class TargetClosestPath : TargetingSystem
             catch
             {
                 MakeNewPath(target.Value, targetObject.tag);
-                
-                for (int i = 0; i < pathUpdateCount; i++)
-                    _nodePathGenerator.Next();
-                
                 return;
             }
         }

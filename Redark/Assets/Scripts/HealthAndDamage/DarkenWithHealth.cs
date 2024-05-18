@@ -18,7 +18,7 @@ public class DarkenWithHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float grayScale = Mathf.Clamp(health.GetHealthPercentage() + 0.2f, 0f, 1f);
+        float grayScale = Mathf.Clamp(health.GetHealthPercentage(), 0f, 1f);
         spriteRenderer.color = new Color(grayScale, grayScale, grayScale, 1f);
     }
 }
