@@ -144,7 +144,7 @@ GameObject:
   - component: {fileID: 607785907544079155}
   - component: {fileID: 3444759354573320368}
   - component: {fileID: 2297988594784961133}
-  - component: {fileID: 3572330595141275860}
+  - component: {fileID: 1326302696377188783}
   - component: {fileID: 7354175866440364377}
   - component: {fileID: 4244402086832528628}
   m_Layer: 0
@@ -431,7 +431,8 @@ MonoBehaviour:
   targetTags: []
   systems:
   - {fileID: 993298950702627009}
-  - {fileID: 3572330595141275860}
+  - {fileID: 3444759354573320368}
+  - {fileID: 1326302696377188783}
 --- !u!114 &993298950702627009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -457,7 +458,7 @@ MonoBehaviour:
     preference: 1
   detectionRadiusInTiles: 5
   minDistance: 0
-  checkVisibility: 0
+  checkVisibility: 1
 --- !u!114 &2009829979961243213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -531,7 +532,7 @@ MonoBehaviour:
   detectionRadiusInTiles: 10
   minDistance: 2
   checkVisibility: 1
---- !u!114 &3572330595141275860
+--- !u!114 &1326302696377188783
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -540,12 +541,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 5680414163916081163}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea9ee1fad8c72effe910a56a4859a050, type: 3}
+  m_Script: {fileID: 11500000, guid: 5a9dc4c0d9624fc2a0fca71800b837a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   targetTags: []
   support: {fileID: 7354175866440364377}
-  maxDistanceToVertex: 8
+  tolerance: 3
+  pathUpdateCount: 3
 --- !u!114 &7354175866440364377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -567,7 +569,7 @@ MonoBehaviour:
     preference: 3
   detectionRadiusInTiles: 50
   minDistance: 2
-  checkVisibility: 1
+  checkVisibility: 0
 --- !u!114 &4244402086832528628
 MonoBehaviour:
   m_ObjectHideFlags: 0
