@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 7835448907516881848}
   - component: {fileID: 3663301885865725081}
   m_Layer: 0
-  m_Name: RotatingdirectionalTurret
+  m_Name: FastTurret
   m_TagString: Turret
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -216,7 +216,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 7901015729634287175, guid: 552b6763c2c160b508f5c249d820ebc5, type: 3}
   targetingSystem: {fileID: 4489046394517963517}
-  cooldownTime: 2
+  cooldownTime: 1.25
 --- !u!114 &5302887713666565239
 MonoBehaviour:
   m_ObjectHideFlags: 0

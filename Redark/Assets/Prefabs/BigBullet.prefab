@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1000365615634088382, guid: 552b6763c2c160b508f5c249d820ebc5, type: 3}
       propertyPath: speed
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1003530349930712710, guid: 552b6763c2c160b508f5c249d820ebc5, type: 3}
       propertyPath: detectionTiles
@@ -70,7 +70,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4844855539928173489, guid: 552b6763c2c160b508f5c249d820ebc5, type: 3}
       propertyPath: time
-      value: 45
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6226866196862548860, guid: 552b6763c2c160b508f5c249d820ebc5, type: 3}
       propertyPath: m_Sprite

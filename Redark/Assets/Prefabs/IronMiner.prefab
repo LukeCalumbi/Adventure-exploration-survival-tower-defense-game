@@ -366,9 +366,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timer:
-    waitTime: 5
+    waitTime: 10
   amount: 1
-  chance: 0.9
+  chance: 0.891
 --- !u!114 &1230060789577588380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -382,9 +382,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timer:
-    waitTime: 10
+    waitTime: 15
   amount: 2
-  chance: 0.4
+  chance: 0.3
 --- !u!114 &3999441250007159075
 MonoBehaviour:
   m_ObjectHideFlags: 0

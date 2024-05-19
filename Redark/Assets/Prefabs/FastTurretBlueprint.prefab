@@ -8,6 +8,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4247237269318141673, guid: 9092c58ffe9574c40bacaac93c1344b0, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 0.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 4247237269318141673, guid: 9092c58ffe9574c40bacaac93c1344b0, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.y
+      value: 0.16
+      objectReference: {fileID: 0}
     - target: {fileID: 5657009749805735064, guid: 9092c58ffe9574c40bacaac93c1344b0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -50,7 +58,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6017150963828189618, guid: 9092c58ffe9574c40bacaac93c1344b0, type: 3}
       propertyPath: m_Name
-      value: Upgrade1
+      value: FastTurretBlueprint
+      objectReference: {fileID: 0}
+    - target: {fileID: 8874129224361114566, guid: 9092c58ffe9574c40bacaac93c1344b0, type: 3}
+      propertyPath: m_Size.x
+      value: 0.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 8874129224361114566, guid: 9092c58ffe9574c40bacaac93c1344b0, type: 3}
+      propertyPath: m_Size.y
+      value: 0.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 8874129224361114566, guid: 9092c58ffe9574c40bacaac93c1344b0, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d42f8f3ae27c126af81034bb37150e48, type: 3}
+    - target: {fileID: 8874129224361114566, guid: 9092c58ffe9574c40bacaac93c1344b0, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4438555090751913420, guid: 9092c58ffe9574c40bacaac93c1344b0, type: 3}
@@ -82,8 +106,8 @@ MonoBehaviour:
   - PlayerSelector
   onHitTags: []
   itemsReceived:
-  - name: Torreta2
-    image: {fileID: 0}
+  - name: FastTurret
+    image: {fileID: 21300000, guid: d757ea491da9cef47931b5f7573755cc, type: 3}
     gameObject: {fileID: 4108401336893996694, guid: e5c38406f9562142c905d207f183b0db, type: 3}
-    cost: 0
+    cost: 5
     isUnique: 0
