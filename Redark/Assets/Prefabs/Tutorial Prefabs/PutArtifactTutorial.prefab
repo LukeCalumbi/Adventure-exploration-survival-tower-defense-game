@@ -282,7 +282,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6388779622934847681, guid: 8c7694c8a24c03c429f7d5f124fde4c7, type: 3}
       propertyPath: m_PresetInfoIsWorld
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6524534261545323147, guid: 8c7694c8a24c03c429f7d5f124fde4c7, type: 3}
       propertyPath: m_text
