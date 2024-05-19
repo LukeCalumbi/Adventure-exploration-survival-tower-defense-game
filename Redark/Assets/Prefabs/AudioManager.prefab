@@ -47,5 +47,26 @@ MonoBehaviour:
   audioList:
   - name: LivingMice
     clip: {fileID: 8300000, guid: f79665822c0b52e60870cad9afe501ad, type: 3}
-    volume: 0.538
+    volume: 0.2
     loop: 0
+  - name: AriaMath
+    clip: {fileID: 8300000, guid: 8b022af4b9242d27294f5872308953ed, type: 3}
+    volume: 0.2
+    loop: 0
+  - name: MiceOnVenus
+    clip: {fileID: 8300000, guid: c4c784cf0ed62d8c7af1c6eac0288d18, type: 3}
+    volume: 0.2
+    loop: 0
+  - name: MoogCity
+    clip: {fileID: 8300000, guid: 7642dce3333fb25669f427ba6507ffee, type: 3}
+    volume: 0.2
+    loop: 0
+  - name: Equinoxe
+    clip: {fileID: 8300000, guid: 2ff9649b2815ec38292bbfabb18139fa, type: 3}
+    volume: 0.2
+    loop: 0
+  - name: Minecraft
+    clip: {fileID: 8300000, guid: d94ccc085888ae06ea3c1c865bbb64a1, type: 3}
+    volume: 0.2
+    loop: 0
+  masterVolume: 0.5
