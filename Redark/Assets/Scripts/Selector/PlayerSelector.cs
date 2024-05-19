@@ -8,7 +8,7 @@ using UnityEngine;
 public class PlayerSelector : MonoBehaviour
 {
     const KeyCode INTERACT_KEY = KeyCode.Space;
-    const KeyCode HIT_KEY = KeyCode.E;
+    const KeyCode HIT_KEY = KeyCode.P;
 
     public FacingDirection facingDirection;
 

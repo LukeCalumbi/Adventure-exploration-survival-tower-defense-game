@@ -48,4 +48,9 @@ public class TargetClosest : TargetingSystem
 
         return false;
     }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(this.transform.position, this.detectionRadiusInTiles * GridSnapping.TILE_SIZE);
+    }
 }
