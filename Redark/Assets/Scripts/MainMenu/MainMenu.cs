@@ -28,6 +28,7 @@ public class MainMenu : MonoBehaviour
                 case MenuChoice.Play: 
                     GameState.ResumeGameplay();
                     ScreenFade.StartFadeOut();
+                    Artifact.FullyRegenerate();
                     SceneManager.LoadScene("TileMap");
                     break;
                 

@@ -56,4 +56,9 @@ public class Artifact : MonoBehaviour
     {
         return health.IsZero();
     }
+
+    public static void FullyRegenerate()
+    {
+        health.Fill();
+    }
 }
