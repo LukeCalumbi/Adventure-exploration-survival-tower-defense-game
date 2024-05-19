@@ -26,8 +26,9 @@ public class MainMenu : MonoBehaviour
             switch (_choice)
             {
                 case MenuChoice.Play: 
-                    SceneManager.LoadScene("TileMap");
+                    GameState.ResumeGameplay();
                     ScreenFade.StartFadeOut();
+                    SceneManager.LoadScene("TileMap");
                     break;
                 
                 case MenuChoice.Exit: 
