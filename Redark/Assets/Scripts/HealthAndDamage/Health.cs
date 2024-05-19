@@ -49,6 +49,7 @@ public class Health : MonoBehaviour
 
     public void SyncWith(Counter counter)
     {
+        health.Resize(counter.GetMaxCount());
         var difference = counter.GetCurrentCount() - health.GetCurrentCount();
         Regenerate(difference);
     }

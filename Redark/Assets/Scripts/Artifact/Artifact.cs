@@ -8,14 +8,8 @@ public class Artifact : MonoBehaviour
     public Health healthComponent;
     public bool isPlayer = false;
 
-    static Counter health = new Counter(10, 10);
+    static Counter health = new Counter(3, 3);
     static bool isPlaced = false;
-
-    private void Update()
-    {
-        healthComponent.SyncWith(health);
-        Debug.Log(health.GetCurrentCount());
-    }
 
     void Start()
     {
@@ -32,7 +26,10 @@ public class Artifact : MonoBehaviour
     public void DoDamage()
     {
         if (isPlayer ^ isPlaced)
+        {
+            healthComponent.SyncWith(health);
             health.CountDown();
+        }
     }
 
     public static bool IsPlaced()

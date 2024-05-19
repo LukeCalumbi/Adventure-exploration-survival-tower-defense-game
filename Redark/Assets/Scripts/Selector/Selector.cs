@@ -19,7 +19,17 @@ public class Selector : MonoBehaviour
     public InteractError TryInteract()
     {
         GameObject gameObject = GetSelectedObject();
+        return InteractWith(gameObject);
+    }
 
+    public void TryInteractAll()
+    {
+        foreach (var gameObject in GetAllObjects())
+            InteractWith(gameObject);
+    }
+    
+    public InteractError InteractWith(GameObject gameObject)
+    {
         if (gameObject == null)
             return InteractError.NoObjectSelected;
         
@@ -34,7 +44,17 @@ public class Selector : MonoBehaviour
     public InteractError TryHit()
     {
         GameObject gameObject = GetSelectedObject();
+        return Hit(gameObject);
+    }
 
+    public void TryHitAll()
+    {
+        foreach (var gameObject in GetAllObjects())
+            Hit(gameObject);
+    }
+
+    public InteractError Hit(GameObject gameObject)
+    {
         if (gameObject == null)
             return InteractError.NoObjectSelected;
         
@@ -61,6 +81,14 @@ public class Selector : MonoBehaviour
 
         colliders.Sort((Collider2D a, Collider2D b) => sortFunction(a, b));
         return colliders[0].gameObject;
+    }
+
+    public List<GameObject> GetAllObjects()
+    {
+        return Physics2D.OverlapBoxAll(transform.position, Vector2.one * (detectionTiles * GridSnapping.TILE_SIZE - 0.1f), 0f)
+                .Where(selectedCollider => selectedCollider.gameObject.GetComponent<Interactable>() != null)
+                .ToList()
+                .ConvertAll(selectedCollider => selectedCollider.gameObject);
     }
 
     public bool IsSelectingSomething()

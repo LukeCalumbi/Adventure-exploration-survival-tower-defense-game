@@ -6,9 +6,12 @@ using UnityEngine;
 public class InstantiateInteractable : InteractableFunction
 {
     public GameObject prefab;
+    public bool setPosition = false;
 
     public override void Action(Selector selector)
     {
-        Instantiate(prefab);
+        GameObject instantiatedObject = Instantiate(prefab);
+        if (setPosition)
+            instantiatedObject.transform.position = transform.position;
     }
 }

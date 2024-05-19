@@ -24,6 +24,14 @@ PrefabInstance:
       propertyPath: systems.Array.data[2]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 633484637620823677, guid: 6436dccd238b3f3b5af3d735f1a93a91, type: 3}
+      propertyPath: defaultStepCount
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 633484637620823677, guid: 6436dccd238b3f3b5af3d735f1a93a91, type: 3}
+      propertyPath: defaultKnockSpeed
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 993298950702627009, guid: 6436dccd238b3f3b5af3d735f1a93a91, type: 3}
       propertyPath: targetTags.Array.size
       value: 4
@@ -134,7 +142,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4400322630619893515, guid: 6436dccd238b3f3b5af3d735f1a93a91, type: 3}
       propertyPath: moveSpeed
-      value: 5
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 4400322630619893515, guid: 6436dccd238b3f3b5af3d735f1a93a91, type: 3}
       propertyPath: stepCount
@@ -143,6 +151,10 @@ PrefabInstance:
     - target: {fileID: 5680414163916081163, guid: 6436dccd238b3f3b5af3d735f1a93a91, type: 3}
       propertyPath: m_Name
       value: BabyZombie
+      objectReference: {fileID: 0}
+    - target: {fileID: 5707977617594903559, guid: 6436dccd238b3f3b5af3d735f1a93a91, type: 3}
+      propertyPath: damage
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5840868922817279121, guid: 6436dccd238b3f3b5af3d735f1a93a91, type: 3}
       propertyPath: maxHealth
