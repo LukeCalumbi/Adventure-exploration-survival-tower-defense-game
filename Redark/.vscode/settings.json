@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Redark.sln"
+    "dotnet.defaultSolution": "redark.sln"
 }
